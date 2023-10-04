@@ -27,30 +27,43 @@ The goal of sigvis is to ...
 You can install the development version of sigvis like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# install.packages('remotes')
+remotes::install
 ```
 
-## Example
+## Usage
 
-This is a basic example which shows you how to solve a common problem:
+### Visualise Signatures
 
-```{r example}
+```{r}
+library(sigstash)
 library(sigvis)
-## basic example code
+library(TCGAdecomp)
+
+# Load Signature 
+signatures <- sig_load('COSMIC_v3.3.1_SBS_GRCh38')
+
+# Visualise a single signature
+sig_visualise(signatures[["SBS2"]])
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### Visualise Decompositions
 
-```{r cars}
-summary(cars)
+```{r, eval = FALSE}
+
+# Load decompositions from sigstash
+brca_decompositions <- decomp_load('BRCA')
+
+# Visualise a decomposition
+sig_visualise(brca_decompositions, 'TCGA-D8-A1XU')
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+### Visualise a Signature Model
 
-You can also embed plots, for example:
+```{r, eval = FALSE}
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+# Visualise the decomposition expected from a signature model, where signature 'SBS1' explains 40% of the mutations in a sample, and 'SBS2' explains the remaining 40%
+
+sig_visualise(signatures, model = c('SBS1' = 0.4, 'SBS2' = 0.6))
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
