@@ -11,6 +11,27 @@ sig_palette_snv_type = function(){
   )
 }
 
+sig_palette_indel_type = function(){
+  c(
+"1:Del:C" = '#FAB15B',
+"1:Del:T" = "#FA6A0C",
+"1:Ins:C" = "#A1D670",
+"1:Ins:T" = "#2F9024",
+"2:Del:R" = "#F7BCA5",
+"3:Del:R" = "#F97356",
+"4:Del:R" = "#E72D28",
+"5:Del:R" = "#AC0016",
+"2:Ins:R" = "#C6D9EC",
+"3:Ins:R" = "#83B6DA",
+"4:Ins:R" = "#3D81BB",
+"5:Ins:R" = "#164C9A",
+"2:Del:M" = "#DBD9E2",
+"3:Del:M" = "#A6A3CF",
+"4:Del:M" = "#716DAD",
+"5:Del:M" = "#4E2C84"
+)
+}
+
 pal_set2 <- function(){
   c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F",
     "#E5C494", "#B3B3B3")
@@ -38,7 +59,8 @@ auto_palette <- function(types, default = pal_set2()){
   types <- na.omit(types)
 
   ls_pals <- list(
-    snv_type = sig_palette_snv_type()
+    snv_type = sig_palette_snv_type(),
+    indel_type = sig_palette_indel_type()
     )
 
   n_matches = vapply(ls_pals, \(pal){ sum(types %in% names(pal)) }, FUN.VALUE = numeric(1))
@@ -102,6 +124,34 @@ levels_snv = function(){
   return(mutation_channels)
 }
 
+levels_indel_type <- function(){
+  c(
+    "1:Del:C", "1:Del:T", "1:Ins:C", "1:Ins:T", "2:Del:R", "3:Del:R",
+    "4:Del:R", "5:Del:R", "2:Ins:R", "3:Ins:R", "4:Ins:R", "5:Ins:R",
+    "2:Del:M", "3:Del:M", "4:Del:M", "5:Del:M"
+  )
+}
+
+levels_indel <- function(){
+  c("1:Del:C:0", "1:Del:C:1", "1:Del:C:2", "1:Del:C:3", "1:Del:C:4",
+    "1:Del:C:5", "1:Del:T:0", "1:Del:T:1", "1:Del:T:2", "1:Del:T:3",
+    "1:Del:T:4", "1:Del:T:5", "1:Ins:C:0", "1:Ins:C:1", "1:Ins:C:2",
+    "1:Ins:C:3", "1:Ins:C:4", "1:Ins:C:5", "1:Ins:T:0", "1:Ins:T:1",
+    "1:Ins:T:2", "1:Ins:T:3", "1:Ins:T:4", "1:Ins:T:5", "2:Del:R:0",
+    "2:Del:R:1", "2:Del:R:2", "2:Del:R:3", "2:Del:R:4", "2:Del:R:5",
+    "3:Del:R:0", "3:Del:R:1", "3:Del:R:2", "3:Del:R:3", "3:Del:R:4",
+    "3:Del:R:5", "4:Del:R:0", "4:Del:R:1", "4:Del:R:2", "4:Del:R:3",
+    "4:Del:R:4", "4:Del:R:5", "5:Del:R:0", "5:Del:R:1", "5:Del:R:2",
+    "5:Del:R:3", "5:Del:R:4", "5:Del:R:5", "2:Ins:R:0", "2:Ins:R:1",
+    "2:Ins:R:2", "2:Ins:R:3", "2:Ins:R:4", "2:Ins:R:5", "3:Ins:R:0",
+    "3:Ins:R:1", "3:Ins:R:2", "3:Ins:R:3", "3:Ins:R:4", "3:Ins:R:5",
+    "4:Ins:R:0", "4:Ins:R:1", "4:Ins:R:2", "4:Ins:R:3", "4:Ins:R:4",
+    "4:Ins:R:5", "5:Ins:R:0", "5:Ins:R:1", "5:Ins:R:2", "5:Ins:R:3",
+    "5:Ins:R:4", "5:Ins:R:5", "2:Del:M:1", "3:Del:M:1", "3:Del:M:2",
+    "4:Del:M:1", "4:Del:M:2", "4:Del:M:3", "5:Del:M:1", "5:Del:M:2",
+    "5:Del:M:3", "5:Del:M:4", "5:Del:M:5")
+}
+
 auto_level <- function(set, type = c('channel', 'type')) {
   type = rlang::arg_match(type)
   assertions::assert_character(set)
@@ -109,7 +159,9 @@ auto_level <- function(set, type = c('channel', 'type')) {
 
   channel_sets <- list(
     sbs_type = levels_snv_type(),
-    sbs_96 = levels_snv()
+    sbs_96 = levels_snv(),
+    indel_type = levels_indel_type(),
+    id_83 = levels_indel()
   )
 
   # Check if unique set match any known channel/type set
