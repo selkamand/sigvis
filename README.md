@@ -19,7 +19,7 @@ You can install the development version of sigvis like so:
 
 ``` r
 # install.packages('remotes')
-remotes::install
+remotes::install_github('selkamand/sigvis')
 ```
 
 ## Usage

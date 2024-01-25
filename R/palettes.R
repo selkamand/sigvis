@@ -151,7 +151,6 @@ levels_indel <- function(){
     "4:Del:M:1", "4:Del:M:2", "4:Del:M:3", "5:Del:M:1", "5:Del:M:2",
     "5:Del:M:3", "5:Del:M:4", "5:Del:M:5")
 }
-
 auto_level <- function(set, type = c('channel', 'type')) {
   type = rlang::arg_match(type)
   assertions::assert_character(set)
