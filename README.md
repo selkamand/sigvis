@@ -63,7 +63,13 @@ explains the remaining 40%
 
 ``` r
 
-# Visualise a model (combination of signatures
+# Visualise a model (combination of signatures)
+
 model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
 sig_visualise(model, class = 'model')
+#> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
+#> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
+#> ✔ Types matched perfectly to palette [snv_type]
 ```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />

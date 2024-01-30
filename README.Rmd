@@ -63,9 +63,10 @@ sig_visualise(brca_decompositions, 'TCGA-D8-A1XU')
 
 Visualise the decomposition expected from a signature model, where signature 'SBS2' explains 60% of the mutations in a sample, and 'SBS13' explains the remaining 40%
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 
-# Visualise a model (combination of signatures
+# Visualise a model (combination of signatures)
+
 model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
 sig_visualise(model, class = 'model')
 ```
