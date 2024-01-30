@@ -29,6 +29,7 @@ remotes::install_github('selkamand/sigvis')
 ``` r
 library(sigstash)
 library(sigvis)
+library(sigstats)
 library(TCGAdecomp)
 
 # Load Signature 
@@ -56,9 +57,13 @@ sig_visualise(brca_decompositions, 'TCGA-D8-A1XU')
 
 ### Visualise a Signature Model
 
+Visualise the decomposition expected from a signature model, where
+signature ‘SBS2’ explains 60% of the mutations in a sample, and ‘SBS13’
+explains the remaining 40%
+
 ``` r
 
-# Visualise the decomposition expected from a signature model, where signature 'SBS1' explains 40% of the mutations in a sample, and 'SBS2' explains the remaining 40%
-
-sig_visualise(signatures, model = c('SBS1' = 0.4, 'SBS2' = 0.6))
+# Visualise a model (combination of signatures
+model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
+sig_visualise(model, class = 'model')
 ```
