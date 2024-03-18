@@ -11,7 +11,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/sigvis)](https://CRAN.R-project.org/package=sigvis)
 <!-- badges: end -->
 
-The goal of sigvis is to …
+Create interactive visualisations that summarise mutational signature
+analyses
 
 ## Installation
 
@@ -27,16 +28,17 @@ remotes::install_github('selkamand/sigvis')
 ### Visualise Signatures
 
 ``` r
-library(sigstash)
-library(sigvis)
-library(sigstats)
-library(TCGAdecomp)
+library(sigverse)
+#> ── Attaching core sigverse packages ───────────────────── sigverse 0.0.0.9000 ──
+#> ✔ sigshared 0.0.0.9000     ✔ sigstats  0.0.0.9000
+#> ✔ sigsim    0.0.0.9000     ✔ sigstory  0.0.0.9000
+#> ✔ sigstash  0.0.0.9000     ✔ sigvis    0.0.0.9000
 
 # Load Signature 
 signatures <- sig_load('COSMIC_v3.3.1_SBS_GRCh38')
 
 # Visualise a single signature
-sig_visualise(signatures[["SBS2"]])
+sig_visualise(signatures[["SBS2"]], title = "SBS2")
 #> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
 #> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
 #> ✔ Types matched perfectly to palette [snv_type]
@@ -47,13 +49,24 @@ sig_visualise(signatures[["SBS2"]])
 ### Visualise Decompositions
 
 ``` r
+# Load library containing results of TCGA mutational signature analysis
+library(TCGAdecomp)
 
 # Load decompositions from sigstash
 brca_decompositions <- decomp_load('BRCA')
 
 # Visualise a decomposition
-sig_visualise(brca_decompositions, 'TCGA-D8-A1XU')
+sig_visualise(
+  brca_decompositions[['TCGA-D8-A1XU-01A-11D-A14K-09']], 
+  class = "decomposition", 
+  title = 'TCGA-D8-A1XU-01A-11D-A14K-09'
+)
+#> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
+#> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
+#> ✔ Types matched perfectly to palette [snv_type]
 ```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 ### Visualise a Signature Model
 
