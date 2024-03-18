@@ -1,0 +1,10 @@
+pandoc: 3.1.11
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  visualisation_guide: visualisation_guide.html
+last_built: 2024-03-18T13:02Z
+urls:
+  reference: https://selkamand.github.io/sigvis/reference
+  article: https://selkamand.github.io/sigvis/articles
+
