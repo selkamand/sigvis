@@ -7,7 +7,13 @@
 #' If the channels match a known channel type, channel display order will instead be based on a predefined order
 #'
 #' @param signature a sigverse signature object
-#'
+#' @param class type of input signature. Is it a signature (e.g. from sigstash database), a decomposition (e.g. from TCGAdecomp or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)
+#' @param title plot title
+#' @param subtitle plot subtitle
+#' @param palette colours based on the 'type' column. By default 'auto' will automatically pick a palette if the values of the 'type' column matches COSMIC SBS, Doublet or Indel mutations. Otherwise should be a named vector where names = types and values are colours.
+#' @param channel_order How channels should be ordered on the X axis. By default 'auto' will automatically pick palette if channels are recognised as a standard COSMIC SBS/DBS/INDEL signature, or if not sorts in alphabetical order. Can also be a vector of channels in the order they should appear
+#' @param na.value colour to use when type = NA
+#' @param options other visualisation options. See [vis_options()] for details
 #'
 #' @return ggplot object
 #' @export
@@ -39,7 +45,7 @@
 sig_visualise <- function(signature, class = c('signature', 'decomposition', 'model'), title = NULL, subtitle = NULL, palette = "auto", channel_order = "auto", na.value = "grey", options = vis_options()){
 
   class <- rlang::arg_match(class)
-  if(class == "signature"){
+  if (class == "signature") {
     sigshared::assert_signature(signature)
 
     col_y = "fraction"
@@ -49,7 +55,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
     label_y = "Fraction"
     labels_y = scales::label_percent()
   }
-  else if(class == "decomposition"){
+  else if (class == "decomposition") {
     sigshared::assert_decomposition(signature)
     col_y = "count"
     col_data_id = "channel"
@@ -58,7 +64,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
     label_y = "Count"
     labels_y = scales::label_number(accuracy = 1, big.mark = ',')
   }
-  else if(class == "model"){
+  else if (class == "model") {
     #sigshared::assert_model(signature) Need to create assert_model
     col_group = "signature"
     col_y = "fraction"
@@ -70,7 +76,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
   }
 
   # Determine channel and type order
-  if(channel_order == "auto"){
+  if (length(channel_order) == 1 && channel_order == "auto") {
    channel_levels = auto_level(signature[['channel']], type = "channel")
    type_levels = auto_level(signature[['type']], type = "type")
   }
@@ -83,6 +89,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
   signature[['channel']] <- forcats::as_factor(signature[['channel']])
   signature[['type']] <- forcats::fct_relevel(signature[['type']], type_levels)
   signature[['channel']] <- forcats::fct_relevel(signature[['channel']], channel_levels)
+
 
   # Create the main plot
   gg <- ggplot(
@@ -111,7 +118,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
     )
 
   # Determine colors
-  if (palette == "auto") {
+  if (length(palette) == 1 && palette == "auto") {
     pal <- auto_palette(unique(as.character(signature[['type']])), default = pal_set2())
   } else {
     assertions::assert_vector(palette)
@@ -121,7 +128,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
   gg <- gg + ggplot2::scale_fill_manual(values = pal, na.value = na.value, name = "")
 
   # Add title and subtitle if provided
-  if(!is.null(title) | !is.null(subtitle)){
+  if (!is.null(title) | !is.null(subtitle)) {
     gg <- gg + ggplot2::ggtitle(title, subtitle)
   }
 
@@ -138,7 +145,7 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
 #' @return ggplot2 theme
 #' @export
 #'
-theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title = NULL, hjust_title = 0.5,...){
+theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title = NULL, hjust_title = 0.5, ...){
   ggplot2:::theme_bw(...) %+replace%
     theme(
       axis.text.x = ggplot2::element_text(angle = 90),
@@ -170,6 +177,8 @@ vis_options <- function(){
     hjust_title = 0.5,
     fontsize_title = 16
   )
+
+  return(opts)
 }
 
 #' Make any sigverse visualisation interactive

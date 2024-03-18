@@ -17,6 +17,20 @@ sig_visualise(
 }
 \arguments{
 \item{signature}{a sigverse signature object}
+
+\item{class}{type of input signature. Is it a signature (e.g. from sigstash database), a decomposition (e.g. from TCGAdecomp or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)}
+
+\item{title}{plot title}
+
+\item{subtitle}{plot subtitle}
+
+\item{palette}{colours based on the 'type' column. By default 'auto' will automatically pick a palette if the values of the 'type' column matches COSMIC SBS, Doublet or Indel mutations. Otherwise should be a named vector where names = types and values are colours.}
+
+\item{channel_order}{How channels should be ordered on the X axis. By default 'auto' will automatically pick palette if channels are recognised as a standard COSMIC SBS/DBS/INDEL signature, or if not sorts in alphabetical order. Can also be a vector of channels in the order they should appear}
+
+\item{na.value}{colour to use when type = NA}
+
+\item{options}{other visualisation options. See \code{\link[=vis_options]{vis_options()}} for details}
 }
 \value{
 ggplot object
