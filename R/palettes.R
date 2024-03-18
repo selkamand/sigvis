@@ -22,7 +22,7 @@ sig_palette_snv_type = function(){
     "C>G" = "black",
     "C>T" = "#D9111E",
     "T>A" = "#C1BDBE",
-    "T>C"= "#92C446",
+    "T>C" = "#92C446",
     "T>G" = "#E6B8B9"
   )
 }
@@ -119,7 +119,8 @@ auto_palette <- function(types, default = pal_set2()){
 
   ls_pals <- list(
     snv_type = sig_palette_snv_type(),
-    indel_type = sig_palette_indel_type()
+    indel_type = sig_palette_indel_type(),
+    dbs_type = sig_palette_doublet_type()
     )
 
   n_matches = vapply(ls_pals, \(pal){ sum(types %in% names(pal)) }, FUN.VALUE = numeric(1))
@@ -145,7 +146,7 @@ auto_palette <- function(types, default = pal_set2()){
     return(default)
   }
   else{
-    cli::cli_alert_warning('No exact palette matches, returning default')
+    cli::cli_alert_warning('No exact palette matches, returning default. It is highly recommended to supply a custom palette. See the {.arg palette} argument')
     return(default)
   }
 }
