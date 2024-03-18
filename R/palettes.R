@@ -46,24 +46,43 @@ sig_palette_doublet_type = function(){
 #' @inherit sig_palette_snv_type title description details seealso sections references examples
 sig_palette_indel_type = function(){
   c(
-"1:Del:C" = '#FAB15B',
-"1:Del:T" = "#FA6A0C",
-"1:Ins:C" = "#A1D670",
-"1:Ins:T" = "#2F9024",
-"2:Del:R" = "#F7BCA5",
-"3:Del:R" = "#F97356",
-"4:Del:R" = "#E72D28",
-"5:Del:R" = "#AC0016",
-"2:Ins:R" = "#C6D9EC",
-"3:Ins:R" = "#83B6DA",
-"4:Ins:R" = "#3D81BB",
-"5:Ins:R" = "#164C9A",
-"2:Del:M" = "#DBD9E2",
-"3:Del:M" = "#A6A3CF",
-"4:Del:M" = "#716DAD",
-"5:Del:M" = "#4E2C84"
-)
+    "1:Del:C" = '#FAB15B',
+    "1:Del:T" = "#FA6A0C",
+    "1:Ins:C" = "#A1D670",
+    "1:Ins:T" = "#2F9024",
+    "2:Del:R" = "#F7BCA5",
+    "3:Del:R" = "#F97356",
+    "4:Del:R" = "#E72D28",
+    "5:Del:R" = "#AC0016",
+    "2:Ins:R" = "#C6D9EC",
+    "3:Ins:R" = "#83B6DA",
+    "4:Ins:R" = "#3D81BB",
+    "5:Ins:R" = "#164C9A",
+    "2:Del:M" = "#DBD9E2",
+    "3:Del:M" = "#A6A3CF",
+    "4:Del:M" = "#716DAD",
+    "5:Del:M" = "#4E2C84"
+  )
 }
+
+#' @inherit sig_palette_snv_type title description details seealso sections references examples
+sig_palette_cn_type = function(){
+
+  c(
+    "HD:0" = "#0600CF",
+    "LOH:1" = "#545454",
+    "LOH:2" = "#228935",
+    "LOH:3-4" = "#7F1CC8",
+    "LOH:5-8" = "#D28526",
+    "LOH:9+" = "#850B49",
+    "Het:2" = "#1E8D2E",
+    "Het:3-4" = "#7F1CC8",
+    "Het:5-8:" = "#D1812A",
+    "Het:9+" = "#850B49"
+  )
+
+}
+
 
 pal_set2 <- function(){
   c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F",
