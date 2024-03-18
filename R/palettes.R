@@ -28,6 +28,7 @@ sig_palette_snv_type = function(){
 }
 
 #' @inherit sig_palette_snv_type title description details seealso sections references examples
+#' @export
 sig_palette_doublet_type = function(){
  c(
    "AC>NN"= "#03BDEE",
@@ -44,6 +45,7 @@ sig_palette_doublet_type = function(){
 }
 
 #' @inherit sig_palette_snv_type title description details seealso sections references examples
+#' @export
 sig_palette_indel_type = function(){
   c(
     "1:Del:C" = '#FAB15B',
@@ -66,6 +68,7 @@ sig_palette_indel_type = function(){
 }
 
 #' @inherit sig_palette_snv_type title description details seealso sections references examples
+#' @export
 sig_palette_cn_type = function(){
 
   c(
@@ -203,6 +206,7 @@ levels_indel <- function(){
     "4:Del:M:1", "4:Del:M:2", "4:Del:M:3", "5:Del:M:1", "5:Del:M:2",
     "5:Del:M:3", "5:Del:M:4", "5:Del:M:5")
 }
+
 auto_level <- function(set, type = c('channel', 'type')) {
   type = rlang::arg_match(type)
   assertions::assert_character(set)
