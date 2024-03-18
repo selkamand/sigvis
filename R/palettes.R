@@ -1,5 +1,21 @@
 
 # Colour Palettes ---------------------------------------------------------
+
+#' Palettes
+#'
+#' Colour palettes for common signature types
+#'
+#' @return Named vector. Names are types, values are colours
+#' @export
+#'
+#' @examples
+#' sig_palette_snv_type()
+#' sig_palette_doublet_type()
+#' sig_palette_indel_type()
+#'
+#' @details
+#' Palettes are consistent with COSMIC signature database (https://cancer.sanger.ac.uk/signatures/)
+#'
 sig_palette_snv_type = function(){
   c(
     "C>A" = "#16AFE9",
@@ -11,6 +27,7 @@ sig_palette_snv_type = function(){
   )
 }
 
+#' @inherit sig_palette_snv_type title description details seealso sections references examples
 sig_palette_doublet_type = function(){
  c(
    "AC>NN"= "#03BDEE",
@@ -26,6 +43,7 @@ sig_palette_doublet_type = function(){
  )
 }
 
+#' @inherit sig_palette_snv_type title description details seealso sections references examples
 sig_palette_indel_type = function(){
   c(
 "1:Del:C" = '#FAB15B',
