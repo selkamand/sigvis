@@ -11,6 +11,21 @@ sig_palette_snv_type = function(){
   )
 }
 
+sig_palette_doublet_type = function(){
+ c(
+   "AC>NN"= "#03BDEE",
+   "AT>NN"= "#0266CC",
+   "CC>NN"= "#A3CD61",
+   "CG>NN"= "#016500",
+   "CT>NN"= "#FE9798",
+   "GC>NN"= "#E42A24",
+   "TA>NN"= "#FEAF64",
+   "TC>NN"= "#FC8002",
+   "TG>NN"= "#CA99FB",
+   "TT>NN"= "#4B029A"
+ )
+}
+
 sig_palette_indel_type = function(){
   c(
 "1:Del:C" = '#FAB15B',
