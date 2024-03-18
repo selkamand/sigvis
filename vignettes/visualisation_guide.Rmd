@@ -1,0 +1,129 @@
+---
+title: "Visualisation Guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualisation Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(sigvis)
+library(sigstash)
+library(TCGAdecomp)
+```
+
+**Warning:** this package is in early development and not ready for general use
+
+## Background
+
+Mutational signature analysis answers 6 key questions. Each answer can be summarized with a visualization.
+
+1.  What is the **observed mutational profile** of a **single sample**
+2.  Are there patterns in the **observed mutational profile** of a **cohort**?
+3.  Which **samples** are my **sample of interest** most similar to with respect to their **observed mutational profile**?
+4.  Does mutational signature analysis **produce a good quality model** from which we can draw robust inferences about a **single sample**?
+5.  What does the **mutational signature model** of a sample say about a **single sample?**
+6.  Are there patterns in the **mutational signature models** of a cohort?
+7.  What does signature X look like?
+
+## **Observed mutational profile**
+
+1\. Single Sample Visualisation
+
+```{r}
+
+# Load a decomposition
+tally <- decomp_load("BRCA", type = "SBS_96")
+
+# Select a single dataframe of interest
+sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
+tally_single_sample <- tally[[sample]]
+
+tally_single_sample
+
+# Visualise it
+sig_visualise(tally_single_sample, class = "decomposition", title = sample)
+```
+
+2A. Cohort stacked bar
+
+2B. Per channel feature distribution in cohort context (dotplots)
+
+## Sample Similarity
+
+3.  signature similarity tree / tsne
+
+## Signature Model
+
+### Quality
+
+4A. Model vs Observed
+
+4B. Residual Plot
+
+4C. Bootstrap performance
+
+### Inferences
+
+5.  Signature Contribution Plot
+6.  Signature composition stacked barplot (compatible with ggoncoplot)
+
+## Signatures
+
+### [**What does signature X look like?**]{.underline}
+
+Often there'll be a mutational signature and want to visualise the profile.
+
+For example lets plot the profile of signature SBS2 from COSMIC database (but same process will work for de-novo signatures)
+
+```{r}
+# Load Signature
+signatures <- sig_load("COSMIC_v3.3.1_SBS_GRCh38")
+
+# Select just SBS2
+sbs2 <- signatures[["SBS2"]]
+
+# Plot
+sig_visualise(signature = sbs2, title = "SBS2")
+
+```
+
+We can do the same with doublets, indels or de novo signatures
+
+```{r}
+# Load Signature
+signatures <- sig_load("COSMIC_v3.3_DBS_GRCh38")
+
+# Select just SBS2
+dbs9 <- signatures[["DBS9"]]
+
+# Plot
+sig_visualise(signature = dbs9, title = "DBS9")
+```
+
+### Custom Data and Palettes
+
+`sig_visualise` allows users to provide custom colour mappings and therefore supports all manner of custom visualisations.
+
+```{r}
+# Create Custom Signature
+sig_custom <- data.frame(
+  type = c("INDELS", "INDELS", "SUBSTITUTIONS","SUBSTITUTIONS"),
+  channel = c("INDELS", "DELETIONS", "SBS", "DOUBLETS"),
+  fraction = c(0.1, 0.1, 0.7, 0.1)
+  )
+
+# Custom palette
+ custom_pal <- c('INDELS' = "darkorange", "SUBSTITUTIONS" = "darkgreen")
+
+# Plot
+sig_visualise(signature = sig_custom, title = "Custom Signature", palette = custom_pal)
+```
