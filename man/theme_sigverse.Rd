@@ -12,6 +12,24 @@ theme_sigverse(
   ...
 )
 }
+\arguments{
+\item{fontsize_x}{fontsize of x axis text (number)}
+
+\item{fontsize_y}{fontsize of y axis text (number)}
+
+\item{fontsize_title}{fontsize of title (number)}
+
+\item{hjust_title}{title horizontal justification (number)}
+
+\item{...}{
+  Arguments passed on to \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw}}
+  \describe{
+    \item{\code{base_size}}{base font size, given in pts.}
+    \item{\code{base_family}}{base font family}
+    \item{\code{base_line_size}}{base size for line elements}
+    \item{\code{base_rect_size}}{base size for rect elements}
+  }}
+}
 \value{
 ggplot2 theme
 }

@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(sigverse)
+library(sigvis)
+library(sigstash)
 library(TCGAdecomp)
 ```
 
@@ -26,7 +27,7 @@ library(TCGAdecomp)
 Mutational signature analysis answers 6 key questions. Each answer can be summarized with a visualization.
 
 1.  What is the **observed mutational profile** of a **single sample**
-2.  Are there patterns in the **oberved mutational profile** of a **cohort**?
+2.  Are there patterns in the **observed mutational profile** of a **cohort**?
 3.  Which **samples** are my **sample of interest** most similar to with respect to their **observed mutational profile**?
 4.  Does mutational signature analysis **produce a good quality model** from which we can draw robust inferences about a **single sample**?
 5.  What does the **mutational signature model** of a sample say about a **single sample?**

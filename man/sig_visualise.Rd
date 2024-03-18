@@ -58,7 +58,7 @@ brca_decompositions <- decomp_load('BRCA')
 sig_visualise(brca_decompositions[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'decomposition')
 
 # Visualise a model (combination of signatures
-model = sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))
+model <- sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))
 sig_visualise(model, class = 'model')
 
 # Make Visualisations Interactive

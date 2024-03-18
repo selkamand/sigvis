@@ -36,7 +36,7 @@
 #' sig_visualise(brca_decompositions[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'decomposition')
 #'
 #' # Visualise a model (combination of signatures
-#' model = sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))
+#' model <- sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))
 #' sig_visualise(model, class = 'model')
 #'
 #' # Make Visualisations Interactive
@@ -141,12 +141,13 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
 #'
 #'
 #' @importFrom ggplot2 %+replace%
-#'
+#' @inheritDotParams ggplot2::theme_bw
+#' @inheritParams vis_options
 #' @return ggplot2 theme
 #' @export
 #'
 theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title = NULL, hjust_title = 0.5, ...){
-  ggplot2:::theme_bw(...) %+replace%
+  ggplot2::theme_bw(...) %+replace%
     theme(
       axis.text.x = ggplot2::element_text(angle = 90),
       axis.title.y = ggplot2::element_text(face = "bold", angle = 90),
@@ -166,16 +167,21 @@ theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title 
 #'
 #' This function provides a way to set various options for visualizing signature plots.
 #'
+#' @param fontsize_x fontsize of x axis text (number)
+#' @param fontsize_y fontsize of y axis text (number)
+#' @param hjust_title title horizontal justification (number)
+#' @param fontsize_title fontsize of title (number)
+#'
 #' @return A list of visualization options.
 #'
 #' @export
 #'
-vis_options <- function(){
+vis_options <- function(fontsize_x = 6, fontsize_y = 9, hjust_title = 0.5, fontsize_title = 16){
   opts = list(
-    fontsize_x = 6,
-    fontsize_y = 9,
-    hjust_title = 0.5,
-    fontsize_title = 16
+    fontsize_x = fontsize_x,
+    fontsize_y = fontsize_y,
+    hjust_title = hjust_title,
+    fontsize_title = fontsize_title
   )
 
   return(opts)

@@ -4,7 +4,21 @@
 \alias{vis_options}
 \title{Set Visualization Options for Signature Plots}
 \usage{
-vis_options()
+vis_options(
+  fontsize_x = 6,
+  fontsize_y = 9,
+  hjust_title = 0.5,
+  fontsize_title = 16
+)
+}
+\arguments{
+\item{fontsize_x}{fontsize of x axis text (number)}
+
+\item{fontsize_y}{fontsize of y axis text (number)}
+
+\item{hjust_title}{title horizontal justification (number)}
+
+\item{fontsize_title}{fontsize of title (number)}
 }
 \value{
 A list of visualization options.

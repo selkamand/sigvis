@@ -20,7 +20,8 @@ It checks if the types match predefined palettes and
 returns the matching palette or a default palette \code{\link[=pal_set2]{pal_set2()}} if no exact match is found.
 }
 \examples{
-# Example usage:
+\dontrun{# Example usage:
 auto_palette(c("T>G", "T>G"))
+}
 
 }

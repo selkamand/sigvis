@@ -87,6 +87,11 @@ sig_palette_cn_type = function(){
 }
 
 
+#' The set2 colour palette
+#'
+#' @return the set2 colour paletted as a named vector
+#' @export
+#'
 pal_set2 <- function(){
   c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F",
     "#E5C494", "#B3B3B3")
@@ -110,8 +115,9 @@ pal_set2 <- function(){
 #' @importFrom stats na.omit
 #'
 #' @examples
-#' # Example usage:
+#' \dontrun{# Example usage:
 #' auto_palette(c("T>G", "T>G"))
+#' }
 #'
 auto_palette <- function(types, default = pal_set2()){
   assertions::assert_character(types)
