@@ -31,16 +31,16 @@ sig_palette_snv_type = function(){
 #' @export
 sig_palette_doublet_type = function(){
  c(
-   "AC>NN"= "#03BDEE",
-   "AT>NN"= "#0266CC",
-   "CC>NN"= "#A3CD61",
-   "CG>NN"= "#016500",
-   "CT>NN"= "#FE9798",
-   "GC>NN"= "#E42A24",
-   "TA>NN"= "#FEAF64",
-   "TC>NN"= "#FC8002",
-   "TG>NN"= "#CA99FB",
-   "TT>NN"= "#4B029A"
+   "AC>NN" = "#03BDEE",
+   "AT>NN" = "#0266CC",
+   "CC>NN" = "#A3CD61",
+   "CG>NN" = "#016500",
+   "CT>NN" = "#FE9798",
+   "GC>NN" = "#E42A24",
+   "TA>NN" = "#FEAF64",
+   "TC>NN" = "#FC8002",
+   "TG>NN" = "#CA99FB",
+   "TT>NN" = "#4B029A"
  )
 }
 
@@ -91,6 +91,10 @@ pal_set2 <- function(){
   c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F",
     "#E5C494", "#B3B3B3")
 }
+
+
+# Autoselect Palette ---------------------------------------
+
 
 #' Automatically select a color palette based on signature types
 #'
@@ -207,16 +211,42 @@ levels_indel <- function(){
     "5:Del:M:3", "5:Del:M:4", "5:Del:M:5")
 }
 
+
+levels_doublet_type <- function(){
+  c("AC>NN", "AT>NN", "CC>NN", "CG>NN", "CT>NN", "GC>NN", "TA>NN",
+    "TC>NN", "TG>NN", "TT>NN")
+}
+
+levels_dbs <- function(){
+  c("AC>CA", "AC>CG", "AC>CT", "AC>GA", "AC>GG", "AC>GT", "AC>TA",
+    "AC>TG", "AC>TT", "AT>CA", "AT>CC", "AT>CG", "AT>GA", "AT>GC",
+    "AT>TA", "CC>AA", "CC>AG", "CC>AT", "CC>GA", "CC>GG", "CC>GT",
+    "CC>TA", "CC>TG", "CC>TT", "CG>AT", "CG>GC", "CG>GT", "CG>TA",
+    "CG>TC", "CG>TT", "CT>AA", "CT>AC", "CT>AG", "CT>GA", "CT>GC",
+    "CT>GG", "CT>TA", "CT>TC", "CT>TG", "GC>AA", "GC>AG", "GC>AT",
+    "GC>CA", "GC>CG", "GC>TA", "TA>AT", "TA>CG", "TA>CT", "TA>GC",
+    "TA>GG", "TA>GT", "TC>AA", "TC>AG", "TC>AT", "TC>CA", "TC>CG",
+    "TC>CT", "TC>GA", "TC>GG", "TC>GT", "TG>AA", "TG>AC", "TG>AT",
+    "TG>CA", "TG>CC", "TG>CT", "TG>GA", "TG>GC", "TG>GT", "TT>AA",
+    "TT>AC", "TT>AG", "TT>CA", "TT>CC", "TT>CG", "TT>GA", "TT>GC",
+    "TT>GG")
+}
+
+
+# Takes a set of channel / types and if theres an exact match in channel_sets, sort in the sigvis defined order.
+# Otherwise return the unique set that was inserted excapt in alphabetical order
 auto_level <- function(set, type = c('channel', 'type')) {
   type = rlang::arg_match(type)
   assertions::assert_character(set)
-  unique_set <- unique(set)
+  unique_set <- sort(unique(set))
 
   channel_sets <- list(
     sbs_type = levels_snv_type(),
     sbs_96 = levels_snv(),
     indel_type = levels_indel_type(),
-    id_83 = levels_indel()
+    id_83 = levels_indel(),
+    doublet_type = levels_doublet_type(),
+    dbs_78 = levels_dbs()
   )
 
   # Check if unique set match any known channel/type set
