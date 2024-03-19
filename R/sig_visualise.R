@@ -7,7 +7,7 @@
 #' If the channels match a known channel type, channel display order will instead be based on a predefined order
 #'
 #' @param signature a sigverse signature object
-#' @param class type of input signature. Is it a signature (e.g. from sigstash database), a decomposition (e.g. from TCGAdecomp or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)
+#' @param class type of input signature. Is it a signature (e.g. from sigstash database), a catalogue (e.g. from TCGAcatalogues or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)
 #' @param title plot title
 #' @param subtitle plot subtitle
 #' @param palette colours based on the 'type' column. By default 'auto' will automatically pick a palette if the values of the 'type' column matches COSMIC SBS, Doublet or Indel mutations. Otherwise should be a named vector where names = types and values are colours.
@@ -23,7 +23,7 @@
 #' @examples
 #' library(sigstash)
 #' library(sigstats)
-#' library(TCGAdecomp)
+#' library(TCGAcatalogues)
 #'
 #' # Load Signature
 #' signatures <- sig_load('COSMIC_v3.3.1_SBS_GRCh38')
@@ -31,9 +31,9 @@
 #' # Visualise a single signature
 #' sig_visualise(signatures[["SBS2"]])
 #'
-#' # Visualise a decomposition
-#' brca_decompositions <- decomp_load('BRCA')
-#' sig_visualise(brca_decompositions[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'decomposition')
+#' # Visualise a catalogue
+#' brca_catalogues <- catalogues_load('BRCA')
+#' sig_visualise(brca_catalogues[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'catalogue')
 #'
 #' # Visualise a model (combination of signatures
 #' model <- sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))
@@ -42,7 +42,7 @@
 #' # Make Visualisations Interactive
 #' gg = sig_visualise(model, class = 'model')
 #' sig_make_interactive(gg)
-sig_visualise <- function(signature, class = c('signature', 'decomposition', 'model'), title = NULL, subtitle = NULL, palette = "auto", channel_order = "auto", na.value = "grey", options = vis_options()){
+sig_visualise <- function(signature, class = c('signature', 'catalogue', 'model'), title = NULL, subtitle = NULL, palette = "auto", channel_order = "auto", na.value = "grey", options = vis_options()){
 
   class <- rlang::arg_match(class)
   if (class == "signature") {
@@ -55,8 +55,8 @@ sig_visualise <- function(signature, class = c('signature', 'decomposition', 'mo
     label_y = "Fraction"
     labels_y = scales::label_percent()
   }
-  else if (class == "decomposition") {
-    sigshared::assert_decomposition(signature)
+  else if (class == "catalogue") {
+    sigshared::assert_catalogue(signature)
     col_y = "count"
     col_data_id = "channel"
     col_tooltip = "channel"

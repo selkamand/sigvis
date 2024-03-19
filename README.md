@@ -31,11 +31,8 @@ pak::pak("selkamand/sigverse")
 ### Visualise Signatures
 
 ``` r
-library(sigverse)
-#> ── Attaching core sigverse packages ───────────────────── sigverse 0.0.0.9000 ──
-#> ✔ sigshared 0.0.0.9000     ✔ sigstats  0.0.0.9000
-#> ✔ sigsim    0.0.0.9000     ✔ sigstory  0.0.0.9000
-#> ✔ sigstash  0.0.0.9000     ✔ sigvis    0.0.0.9000
+library(sigvis)
+library(sigstash)
 
 # Load Signature
 signatures <- sig_load("COSMIC_v3.3.1_SBS_GRCh38")
@@ -52,15 +49,15 @@ sig_visualise(signature = SBS2, title = "SBS2")
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
-### Visualise Decompositions
+### Visualise catalogues
 
 ``` r
 # Load library containing results of TCGA mutational signature analysis
-library(TCGAdecomp)
+library(TCGAcatalogues)
 
 
-# Load a decomposition
-tally <- decomp_load("BRCA", type = "SBS_96")
+# Load a catalogue
+tally <- catalogues_load("BRCA", type = "SBS_96")
 
 # Select a single sample of interest
 sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
@@ -83,7 +80,7 @@ tally_single_sample
 #> # ℹ 86 more rows
 
 # Visualise Observed Mutational Profile
-sig_visualise(tally_single_sample, class = "decomposition", title = sample)
+sig_visualise(tally_single_sample, class = "catalogue", title = sample)
 #> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
 #> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
 #> ✔ Types matched perfectly to palette [snv_type]
@@ -93,11 +90,14 @@ sig_visualise(tally_single_sample, class = "decomposition", title = sample)
 
 ### Visualise a Signature Model
 
-Visualise the decomposition expected from a signature model, where
-signature ‘SBS2’ explains 60% of the mutations in a sample, and ‘SBS13’
-explains the remaining 40%
+Visualise the catalogue expected from a signature model, where signature
+‘SBS2’ explains 60% of the mutations in a sample, and ‘SBS13’ explains
+the remaining 40%
 
 ``` r
+# Load sigstats library for combining signature models
+library(sigstats)
+
 # Visualise a model (combination of signatures)
 model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
 sig_visualise(model, class = 'model', title = "Model", subtitle = "Combination of SBS2 (60%) and SBS13 (40%)")
