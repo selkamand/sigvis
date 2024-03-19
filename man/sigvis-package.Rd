@@ -12,6 +12,7 @@ What the package does (one paragraph).
 Useful links:
 \itemize{
   \item \url{https://github.com/selkamand/sigvis}
+  \item \url{https://selkamand.github.io/sigvis/}
   \item Report bugs at \url{https://github.com/selkamand/sigvis/issues}
 }
 

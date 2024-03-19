@@ -6,7 +6,7 @@
 \usage{
 sig_visualise(
   signature,
-  class = c("signature", "decomposition", "model"),
+  class = c("signature", "catalogue", "model"),
   title = NULL,
   subtitle = NULL,
   palette = "auto",
@@ -18,7 +18,7 @@ sig_visualise(
 \arguments{
 \item{signature}{a sigverse signature object}
 
-\item{class}{type of input signature. Is it a signature (e.g. from sigstash database), a decomposition (e.g. from TCGAdecomp or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)}
+\item{class}{type of input signature. Is it a signature (e.g. from sigstash database), a catalogue (e.g. from TCGAcatalogues or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)}
 
 \item{title}{plot title}
 
@@ -45,7 +45,7 @@ If the channels match a known channel type, channel display order will instead b
 \examples{
 library(sigstash)
 library(sigstats)
-library(TCGAdecomp)
+library(TCGAcatalogues)
 
 # Load Signature
 signatures <- sig_load('COSMIC_v3.3.1_SBS_GRCh38')
@@ -53,9 +53,9 @@ signatures <- sig_load('COSMIC_v3.3.1_SBS_GRCh38')
 # Visualise a single signature
 sig_visualise(signatures[["SBS2"]])
 
-# Visualise a decomposition
-brca_decompositions <- decomp_load('BRCA')
-sig_visualise(brca_decompositions[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'decomposition')
+# Visualise a catalogue
+brca_catalogues <- catalogues_load('BRCA')
+sig_visualise(brca_catalogues[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'catalogue')
 
 # Visualise a model (combination of signatures
 model <- sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))

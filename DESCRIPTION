@@ -11,7 +11,7 @@ Suggests:
     rmarkdown,
     sigstash,
     sigstats (>= 0.0.0.9000),
-    TCGAdecomp,
+    TCGAcatalogues,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
@@ -32,5 +32,5 @@ Remotes:
     selkamand/sigshared,
     selkamand/sigstats,
     selkamand/sigstash,
-    selkamand/TCGAdecomp
+    selkamand/TCGAcatalogues
 VignetteBuilder: knitr

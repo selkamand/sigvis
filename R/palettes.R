@@ -166,7 +166,7 @@ levels_snv_type = function(){
 
 
 levels_snv = function(){
-  # Create a character vector with the mutation signature analysis decomposition channels
+  # Create a character vector with the mutation signature analysis catalogue channels
   mutation_channels <- c(
     "A[C>A]A", "A[C>A]C", "A[C>A]G", "A[C>A]T", "C[C>A]A", "C[C>A]C", "C[C>A]G", "C[C>A]T",
     "G[C>A]A", "G[C>A]C", "G[C>A]G", "G[C>A]T", "T[C>A]A", "T[C>A]C", "T[C>A]G", "T[C>A]T",

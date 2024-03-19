@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(sigvis)
 library(sigstash)
-library(TCGAdecomp)
+library(TCGAcatalogues)
 ```
 
 **Warning:** this package is in early development and not ready for general use
@@ -40,8 +40,8 @@ Mutational signature analysis answers 6 key questions. Each answer can be summar
 
 ```{r}
 
-# Load a decomposition
-tally <- decomp_load("BRCA", type = "SBS_96")
+# Load a catalogue
+tally <- catalogues_load("BRCA", type = "SBS_96")
 
 # Select a single dataframe of interest
 sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
@@ -50,7 +50,7 @@ tally_single_sample <- tally[[sample]]
 tally_single_sample
 
 # Visualise it
-sig_visualise(tally_single_sample, class = "decomposition", title = sample)
+sig_visualise(tally_single_sample, class = "catalogue", title = sample)
 ```
 
 2A. Cohort stacked bar
