@@ -34,6 +34,9 @@
     <loc>https://selkamand.github.io/sigvis/reference/sig_make_interactive.html</loc>
   </url>
   <url>
+    <loc>https://selkamand.github.io/sigvis/reference/sig_make_interactive_overlay.html</loc>
+  </url>
+  <url>
     <loc>https://selkamand.github.io/sigvis/reference/sig_palette_cn_type.html</loc>
   </url>
   <url>
@@ -47,6 +50,9 @@
   </url>
   <url>
     <loc>https://selkamand.github.io/sigvis/reference/sig_visualise.html</loc>
+  </url>
+  <url>
+    <loc>https://selkamand.github.io/sigvis/reference/sig_visualise_overlay.html</loc>
   </url>
   <url>
     <loc>https://selkamand.github.io/sigvis/reference/sigvis-package.html</loc>
