@@ -78,6 +78,9 @@ tally_single_sample
 #>  9 A[C>T]A C>T   0.00402      8
 #> 10 A[C>T]C C>T   0.00151      3
 #> # ℹ 86 more rows
+```
+
+``` r
 
 # Visualise Observed Mutational Profile
 sig_visualise(tally_single_sample, class = "catalogue", title = sample)
@@ -107,3 +110,40 @@ sig_visualise(model, class = 'model', title = "Model", subtitle = "Combination o
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+### Visualise a Signature Model Against the Observed Mutation Catalogue
+
+Visualise the catalogue expected from a signature model, where signature
+‘SBS2’ explains 60% of the mutations in a sample, and ‘SBS13’ explains
+the remaining 40%, but overlay on top of the observed mutational process
+
+``` r
+library(sigstats) # For combining signature models
+library(sigstash) # For pulling signatures
+library(TCGAcatalogues) # For pulling example TCGA catalogue data
+
+# Load Signature
+signatures <- sig_load("COSMIC_v3.3.1_SBS_GRCh38")
+
+# Create a model (combination of signatures)
+model <- sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4)) 
+model_signature <- sig_combine_collapse_to_single_signature(model) # Should be an option in sig_combine
+
+# Load a catalogue (Tally of variant types)
+tally <- catalogues_load("BRCA", type = "SBS_96")
+
+# Get tally of a single sample
+sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
+tally_single_sample <- tally[[sample]]
+
+# Visualise the overlay
+sig_visualise_overlay(
+  catalogue = tally_single_sample,
+  signature = model_signature
+)
+#> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
+#> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
+#> ✔ Types matched perfectly to palette [snv_type]
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />

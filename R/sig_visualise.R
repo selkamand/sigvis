@@ -136,6 +136,168 @@ sig_visualise <- function(signature, class = c('signature', 'catalogue', 'model'
   return(gg)
 }
 
+#' Visualise a signature overlayed on observed mutational profile
+#'
+#' @param signature a sigverse signature object representing the exposure model (data.frame)
+#' @param catalogue a sigverse catalogue (tally) representing an observed mutational profile (data.frame)
+#' @inheritParams sig_visualise
+#'
+#' @return a ggplot object.
+#' @export
+#'
+#' @examples
+#' library(sigstats) # For combining signature models
+#' library(sigstash) # For pulling signatures
+#' library(TCGAcatalogues) # For pulling example TCGA catalogue data
+#'
+#' # Load Signature
+#' signatures <- sig_load("COSMIC_v3.3.1_SBS_GRCh38")
+#'
+#' # Create a model (combination of signatures)
+#' model <- sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
+#' model_signature <- sig_combine_collapse_to_single_signature(model)
+#'
+#' # Load a catalogue (Tally of variant types)
+#' tally <- catalogues_load("BRCA", type = "SBS_96")
+#'
+#' # Get tally of a single sample
+#' sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
+#' tally_single_sample <- tally[[sample]]
+#'
+#' # Visualise the overlay
+#' sig_visualise_overlay(
+#'   catalogue = tally_single_sample,
+#'   signature = model_signature
+#' )
+sig_visualise_overlay <- function(signature, catalogue, channel_order = "auto", palette = "auto", na.value = "grey", subtitle = NULL, title = NULL, options = vis_options()){
+  # Assertions
+  sigshared::assert_catalogue(catalogue)
+  sigshared::assert_signature(signature)
+
+  assertions::assert(
+    setequal(catalogue[["channel"]], signature[["channel"]]),
+    msg = "Channels in the catalogue and signature data.frames must contain the same elements"
+  )
+
+  assertions::assert(
+    setequal(catalogue[["type"]], signature[["type"]]),
+    msg = "Type of mutations in the catalogue and signature data.frames contain the same elements"
+  )
+
+  # Determine channel and type order
+  if (length(channel_order) == 1 && channel_order == "auto") {
+    channel_levels = auto_level(signature[['channel']], type = "channel")
+    type_levels = auto_level(signature[['type']], type = "type")
+  }
+  else{
+    channel_levels = channel_order
+  }
+
+  # Turn Signature Into a Catalogue
+  total_mutations <- sum(catalogue[["count"]])
+  catalogue_reconstructed <- sigstats::sig_reconstruct(signature, total_mutations)
+
+  # Convert to factors and reorder
+  catalogue_reconstructed[['type']] <- forcats::as_factor(catalogue_reconstructed[['type']])
+  catalogue_reconstructed[['channel']] <- forcats::as_factor(catalogue_reconstructed[['channel']])
+  catalogue_reconstructed[['type']] <- forcats::fct_relevel(catalogue_reconstructed[['type']], type_levels)
+  catalogue_reconstructed[['channel']] <- forcats::fct_relevel(catalogue_reconstructed[['channel']], channel_levels)
+
+  # Convert to factors and reorder
+  catalogue[['type']] <- forcats::as_factor(catalogue[['type']])
+  catalogue[['channel']] <- forcats::as_factor(catalogue[['channel']])
+  catalogue[['type']] <- forcats::fct_relevel(catalogue[['type']], type_levels)
+  catalogue[['channel']] <- forcats::fct_relevel(catalogue[['channel']], channel_levels)
+
+
+  # Add and sort columns so catalogue and signature dataframe can be row-bound
+  col_order <- c("channel", "type", "fraction", "count", "datatype", "tooltip", "data_id")
+  catalogue[["datatype"]] <- "observed"
+  catalogue[["data_id"]] <- paste(catalogue[["type"]], catalogue[["channel"]])
+  catalogue[["tooltip"]] <- catalogue[["fraction"]]
+
+  catalogue <- catalogue[, col_order]
+
+  catalogue_reconstructed[["datatype"]] <- "reconstructed"
+  catalogue_reconstructed[["data_id"]] <- paste(catalogue_reconstructed[["type"]], catalogue_reconstructed[["channel"]])
+  catalogue_reconstructed[["matched_channel_observed"]] <- catalogue[["count"]][match(catalogue_reconstructed[["data_id"]], catalogue[["data_id"]])]
+
+  catalogue_reconstructed[["tooltip"]] <- paste0(
+    catalogue_reconstructed[["channel"]], "<br>",
+    "Observed: ",
+    round(catalogue_reconstructed[["matched_channel_observed"]], digits = 1), " mutations",
+    "<br>",
+    "Reconstructed: ",
+    round(catalogue_reconstructed[["count"]], digits = 1), " mutations"
+    )
+  catalogue_reconstructed <- catalogue_reconstructed[, col_order]
+
+  # Combine catalogue and signature data
+  # df_combined <- rbind(catalogue, signature)
+
+  # Create the main plot
+  gg <- ggplot() +
+    ggiraph::geom_col_interactive(
+      data = catalogue,
+      mapping = aes(
+        x = .data[["channel"]],
+        y = .data[["count"]],
+        data_id = .data[["data_id"]],
+        #tooltip = .data[["tooltip"]]
+      ),
+      position = "identity",
+      fill = "white",
+      color = "black",
+      width = 1
+    ) +
+    ggplot2::scale_y_continuous(
+      name = "Count",
+      labels = scales::label_number(accuracy = 1, big.mark = ','),
+      expand = expansion(mult = c(0,0.05))
+      ) +
+    ggiraph::geom_col_interactive(
+      data = catalogue_reconstructed,
+      mapping = aes(
+        x = .data[["channel"]],
+        y = .data[["count"]],
+        fill = .data[["type"]],
+        data_id = .data[["data_id"]],
+        tooltip = .data[["tooltip"]]
+      ),
+      hover_nearest = TRUE,
+      position = "identity",
+      linewidth = 0,
+      width = 0.5,
+      alpha = 0.8
+    ) +
+    xlab(NULL) +
+    theme_sigverse() +
+    theme_sigverse(
+      fontsize_x = options$fontsize_x,
+      fontsize_y = options$fontsize_y,
+      fontsize_title = options$fontsize_title,
+      hjust_title = options$hjust_title
+    )
+
+  # Determine colors
+  if (length(palette) == 1 && palette == "auto") {
+    pal <- auto_palette(unique(as.character(signature[['type']])), default = pal_set2())
+  } else {
+    assertions::assert_vector(palette)
+    assertions::assert_names_include(palette, signature[['type']])
+    pal <- palette
+  }
+  gg <- gg + ggplot2::scale_fill_manual(values = pal, na.value = na.value, name = "")
+
+  # Add title and subtitle if provided
+  if (!is.null(title) | !is.null(subtitle)) {
+    gg <- gg + ggplot2::ggtitle(title, subtitle)
+  }
+
+  # Return the plot
+  return(gg)
+
+}
 
 #' Sigverse Theme for Signature Plots
 #'
@@ -155,6 +317,7 @@ theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title 
       axis.text.x.bottom = ggplot2::element_text(size = fontsize_x),
       axis.text.y.left = ggplot2::element_text(size = fontsize_y),
       axis.ticks.x = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
       strip.background = ggplot2::element_rect(fill = "black"),
       strip.text = ggplot2::element_text(colour = "white", face = "bold"),
       panel.border = ggplot2::element_blank(),
@@ -198,3 +361,28 @@ sig_make_interactive <- function(gg){
   ggiraph::girafe(ggobj = gg, width_svg = 12)
 }
 
+
+#' Make sigverse overlay visualisation interactive
+#'
+#' @param gg the plot returned from any sigverse visualisation
+#'
+#' @return a ggiraph interactive visualisation
+#' @export
+#'
+sig_make_interactive_overlay <- function(gg){
+  ggi <- ggiraph::girafe(ggobj = gg, width_svg = 12)
+  ggi <- ggiraph::girafe_options(
+    ggi,
+    ggiraph::opts_hover(
+      css = "stroke-width: 2",
+      nearest_distance = 50
+      ),
+    ggiraph::opts_hover_inv(
+      css = "fill-opacity:0.5; stroke-opacity: 0.5"
+    ),
+    ggiraph::opts_tooltip(
+      css = "background-color:#d8118c;color:white;padding:5px;border-radius:3px;", opacity = 1, use_fill = TRUE
+      )
+    )
+  return(ggi)
+}
