@@ -8,7 +8,8 @@ vis_options(
   fontsize_x = 6,
   fontsize_y = 9,
   hjust_title = 0.5,
-  fontsize_title = 16
+  fontsize_title = 16,
+  fontsize_axis_title_y = 14
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ vis_options(
 \item{hjust_title}{title horizontal justification (number)}
 
 \item{fontsize_title}{fontsize of title (number)}
+
+\item{fontsize_axis_title_y}{fontsize of the y axis title (number)}
 }
 \value{
 A list of visualization options.

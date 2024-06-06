@@ -4,33 +4,12 @@
 \alias{sig_visualise_overlay}
 \title{Visualise a signature overlayed on observed mutational profile}
 \usage{
-sig_visualise_overlay(
-  signature,
-  catalogue,
-  channel_order = "auto",
-  palette = "auto",
-  na.value = "grey",
-  subtitle = NULL,
-  title = NULL,
-  options = vis_options()
-)
+sig_visualise_overlay(signature, catalogue, ...)
 }
 \arguments{
 \item{signature}{a sigverse signature object representing the exposure model (data.frame)}
 
 \item{catalogue}{a sigverse catalogue (tally) representing an observed mutational profile (data.frame)}
-
-\item{channel_order}{How channels should be ordered on the X axis. By default 'auto' will automatically pick palette if channels are recognised as a standard COSMIC SBS/DBS/INDEL signature, or if not sorts in alphabetical order. Can also be a vector of channels in the order they should appear}
-
-\item{palette}{colours based on the 'type' column. By default 'auto' will automatically pick a palette if the values of the 'type' column matches COSMIC SBS, Doublet or Indel mutations. Otherwise should be a named vector where names = types and values are colours.}
-
-\item{na.value}{colour to use when type = NA}
-
-\item{subtitle}{plot subtitle}
-
-\item{title}{plot title}
-
-\item{options}{other visualisation options. See \code{\link[=vis_options]{vis_options()}} for details}
 }
 \value{
 a ggplot object.
@@ -58,8 +37,11 @@ sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
 tally_single_sample <- tally[[sample]]
 
 # Visualise the overlay
-sig_visualise_overlay(
+gg <- sig_visualise_overlay(
   catalogue = tally_single_sample,
   signature = model_signature
 )
+
+# Make interactive
+sig_make_interactive(gg)
 }

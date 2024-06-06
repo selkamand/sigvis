@@ -2,12 +2,12 @@
 
 export(pal_set2)
 export(sig_make_interactive)
-export(sig_make_interactive_overlay)
 export(sig_palette_cn_type)
 export(sig_palette_doublet_type)
 export(sig_palette_indel_type)
 export(sig_palette_snv_type)
 export(sig_visualise)
+export(sig_visualise_compare)
 export(sig_visualise_overlay)
 export(theme_sigverse)
 export(vis_options)

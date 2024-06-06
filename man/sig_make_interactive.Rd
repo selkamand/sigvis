@@ -2,9 +2,9 @@
 % Please edit documentation in R/sig_visualise.R
 \name{sig_make_interactive}
 \alias{sig_make_interactive}
-\title{Make any sigverse visualisation interactive}
+\title{Make sigverse overlay visualisation interactive}
 \usage{
-sig_make_interactive(gg)
+sig_make_interactive(gg, width_svg = 12, height_svg = NULL)
 }
 \arguments{
 \item{gg}{the plot returned from any sigverse visualisation}
@@ -13,5 +13,5 @@ sig_make_interactive(gg)
 a ggiraph interactive visualisation
 }
 \description{
-Make any sigverse visualisation interactive
+Make sigverse overlay visualisation interactive
 }
