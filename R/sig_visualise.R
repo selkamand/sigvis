@@ -471,7 +471,7 @@ vis_options <- function(fontsize_x = 6, fontsize_y = 9, hjust_title = 0.5, fonts
 #' Make sigverse overlay visualisation interactive
 #'
 #' @param gg the plot returned from any sigverse visualisation
-#'
+#' @inheritParams ggiraph::girafe
 #' @return a ggiraph interactive visualisation
 #' @export
 #'
