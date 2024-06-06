@@ -92,7 +92,7 @@ sig_visualise(model, class = 'model', title = "Model", subtitle = "Combination o
 
 Visualise the catalogue expected from a signature model, where signature 'SBS2' explains 60% of the mutations in a sample, and 'SBS13' explains the remaining 40%, but overlay on top of the observed mutational process
 
-```{r}
+```{r fig.height=4, fig.width=10}
 library(sigstats) # For combining signature models
 library(sigstash) # For pulling signatures
 library(TCGAcatalogues) # For pulling example TCGA catalogue data
@@ -112,7 +112,7 @@ sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
 tally_single_sample <- tally[[sample]]
 
 # Visualise the overlay
-sig_visualise_overlay(
+sig_visualise_compare_reconstructed_to_observed(
   catalogue = tally_single_sample,
   signature = model_signature
 )
