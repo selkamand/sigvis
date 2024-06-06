@@ -346,7 +346,8 @@ make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, p
 #'
 #' @param signature a sigverse signature object representing the exposure model (data.frame)
 #' @param catalogue a sigverse catalogue (tally) representing an observed mutational profile (data.frame)
-#' @inheritParams sig_visualise
+#' @inheritParams sig_visualise_compare
+#' @inheritDotParams sig_visualise_compare
 #'
 #' @return a ggplot object.
 #' @export
@@ -371,14 +372,14 @@ make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, p
 #' tally_single_sample <- tally[[sample]]
 #'
 #' # Visualise the overlay
-#' gg <- sig_visualise_overlay(
+#' gg <- sig_visualise_compare_reconstructed_to_observed(
 #'   catalogue = tally_single_sample,
 #'   signature = model_signature
 #' )
 #'
 #' # Make interactive
 #' sig_make_interactive(gg)
-sig_visualise_overlay <- function(signature, catalogue, ...){
+sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue, ...){
   # Assertions
   sigshared::assert_catalogue(catalogue)
   sigshared::assert_signature(signature)
