@@ -2,16 +2,24 @@
 % Please edit documentation in R/sig_visualise.R
 \name{sig_make_interactive}
 \alias{sig_make_interactive}
-\title{Make any sigverse visualisation interactive}
+\title{Make sigverse overlay visualisation interactive}
 \usage{
-sig_make_interactive(gg)
+sig_make_interactive(gg, width_svg = 12, height_svg = NULL)
 }
 \arguments{
 \item{gg}{the plot returned from any sigverse visualisation}
+
+\item{width_svg, height_svg}{The width and height of the graphics region in inches.
+The default values are 6 and 5 inches. This will define the aspect ratio of the
+graphic as it will be used to define viewbox attribute of the SVG result.
+
+If you use \code{girafe()} in an 'R Markdown' document, we
+recommend not using these arguments so that the knitr
+options \code{fig.width} and \code{fig.height} are used instead.}
 }
 \value{
 a ggiraph interactive visualisation
 }
 \description{
-Make any sigverse visualisation interactive
+Make sigverse overlay visualisation interactive
 }

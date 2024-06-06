@@ -137,7 +137,7 @@ sample = "TCGA-5L-AAT1-01A-12D-A41F-09"
 tally_single_sample <- tally[[sample]]
 
 # Visualise the overlay
-sig_visualise_overlay(
+sig_visualise_compare_reconstructed_to_observed(
   catalogue = tally_single_sample,
   signature = model_signature
 )

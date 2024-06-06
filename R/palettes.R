@@ -275,3 +275,11 @@ auto_level <- function(set, type = c('channel', 'type')) {
   }
 }
 
+
+type2colour <- function(type, palette, na.value = "grey"){
+  colours <- palette[match(type, names(palette))]
+  colours[is.na(colours)] <- "grey"
+
+  return(colours)
+
+}

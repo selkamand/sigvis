@@ -136,11 +136,218 @@ sig_visualise <- function(signature, class = c('signature', 'catalogue', 'model'
   return(gg)
 }
 
+
+
+#' Compare two signature catalogues by overlaying one over the other
+#'
+#' @param catalogue1,catalogue2 a sigverse catalogue (tally) representing an observed mutational profile (data.frame)
+#' @param compare what metric to compare (counts or fractions)
+#' @param names a 2 element character vector describing the names that should be used to describe catalogue 1 and 2 retrospectively.
+#' @inheritParams sig_visualise
+#'
+#' @return a ggplot object.
+#' @export
+#'
+#' @examples
+#' library(sigstats) # For combining signature models
+#' library(TCGAcatalogues) # For pulling example TCGA catalogue data
+#'
+#' # Load a catalogue collection (Tally of variant types)
+#' catalogues <- catalogues_load("BRCA", type = "SBS_96")
+#'
+#' # Get catalogue of 2 different samples
+#' sample1 = "TCGA-OL-A6VQ-01A-12D-A41F-09"
+#' sample2 = "TCGA-OL-A97C-01A-32D-A41F-09"
+#' catalogue_sample1 <- catalogues[[sample1]]
+#' catalogue_sample2 <- catalogues[[sample2]]
+#'
+#'
+#' # Compare the two catalogues
+#' ggcompare <- sig_visualise_compare(
+#'   catalogue1 = catalogue_sample1,
+#'   catalogue2 = catalogue_sample2
+#' )
+#'
+#' # Make interactive
+#' sig_make_interactive(ggcompare)
+#'
+sig_visualise_compare <- function(catalogue1, catalogue2, compare = c("count", "fraction"), names = c("Sample 1", "Sample 2"), channel_order = "auto", palette = "auto", na.value = "grey", subtitle = NULL, title = NULL, options = vis_options()){
+
+# Assertions
+sigshared::assert_catalogue(catalogue1)
+sigshared::assert_catalogue(catalogue2)
+compare <- rlang::arg_match(compare)
+assertions::assert_character_vector(names)
+assertions::assert_equal(length(names), 2, msg = "{.arg names} must contain 2 values describing the names of catalogue1 and catalogue2 respectively. Found [{length(names)}] values.")
+
+assertions::assert(
+  setequal(catalogue1[["channel"]], catalogue2[["channel"]]),
+  msg = "Channels in the catalogue data.frames must contain the same elements"
+)
+
+assertions::assert(
+  setequal(catalogue1[["type"]], catalogue2[["type"]]),
+  msg = "Type of mutations in the catalogue data.frames contain the same elements"
+)
+
+# Determine channel and type order
+if (length(channel_order) == 1 && channel_order == "auto") {
+  channel_levels = auto_level(catalogue1[['channel']], type = "channel")
+  type_levels = auto_level(catalogue1[['type']], type = "type")
+}
+else{
+  channel_levels = channel_order
+}
+
+
+# Convert to factors and reorder
+catalogue1[['type']] <- forcats::as_factor(catalogue1[['type']])
+catalogue1[['channel']] <- forcats::as_factor(catalogue1[['channel']])
+catalogue1[['type']] <- forcats::fct_relevel(catalogue1[['type']], type_levels)
+catalogue1[['channel']] <- forcats::fct_relevel(catalogue1[['channel']], channel_levels)
+
+# Convert to factors and reorder
+catalogue2[['type']] <- forcats::as_factor(catalogue2[['type']])
+catalogue2[['channel']] <- forcats::as_factor(catalogue2[['channel']])
+catalogue2[['type']] <- forcats::fct_relevel(catalogue2[['type']], type_levels)
+catalogue2[['channel']] <- forcats::fct_relevel(catalogue2[['channel']], channel_levels)
+
+# Add Data-IDs for merge
+catalogue1[["data_id"]] <- paste(catalogue1[["type"]], catalogue1[["channel"]])
+catalogue2[["data_id"]] <- paste(catalogue2[["type"]], catalogue2[["channel"]])
+
+# Remove everything but data_id and values
+catalogue2 <- catalogue2[,c("data_id","count", "fraction")]
+
+# Left Join to make 1 wide table
+catalogue <- merge(catalogue1, catalogue2, by = "data_id", all.x = TRUE, suffixes = c(".c1", ".c2"))
+
+
+# Determine colors
+if (length(palette) == 1 && palette == "auto") {
+  pal <- auto_palette(unique(as.character(catalogue1[['type']])), default = pal_set2())
+} else {
+  assertions::assert_vector(palette)
+  assertions::assert_names_include(palette, catalogue1[['type']])
+  pal <- palette
+}
+
+# Add tooltip
+catalogue[["tooltip"]] <- make_tooltip(
+  channels = catalogue[["channel"]],
+  type = catalogue[["type"]],
+  mutations1 = catalogue[["count.c1"]],
+  mutations2 = catalogue[["count.c2"]],
+  name1 = names[1],
+  name2 =  names[2],
+  pal = pal
+)
+
+
+# Setup properties of plot
+if(compare == "count"){
+  labels_y = scales::label_number(accuracy = 1, big.mark = ',')
+  y_name = "Count"
+}
+else if(compare == "fraction"){
+  labels_y = scales::label_percent(accuracy = 1)
+  y_name = "Fraction"
+}
+
+# Create the main plot
+gg <- ggplot() +
+  ggiraph::geom_col_interactive(
+    data = catalogue,
+    mapping = aes(
+      x = .data[["channel"]],
+      y = .data[[paste0(compare, ".c2")]],
+      data_id = .data[["data_id"]],
+      tooltip = .data[["tooltip"]],
+      onclick = paste0('navigator.clipboard.writeText("',.data[["channel"]],'")')
+    ),
+    hover_nearest = TRUE,
+    position = "identity",
+    fill = "white",
+    color = "black",
+    width = 1
+  ) +
+  ggplot2::scale_y_continuous(
+    name = y_name,
+    labels = labels_y,
+    expand = expansion(mult = c(0,0.05))
+  ) +
+  ggiraph::geom_col_interactive(
+    data = catalogue,
+    mapping = aes(
+      x = .data[["channel"]],
+      y = .data[[paste0(compare, ".c1")]],
+      fill = .data[["type"]],
+      data_id = .data[["data_id"]],
+      tooltip = .data[["tooltip"]],
+      onclick = paste0('navigator.clipboard.writeText("',.data[["channel"]],'")')
+    ),
+    hover_nearest = TRUE,
+    position = "identity",
+    linewidth = 0,
+    width = 0.6,
+    alpha = 1
+  ) +
+  xlab(NULL) +
+  theme_sigverse(
+    fontsize_x = options$fontsize_x,
+    fontsize_y = options$fontsize_y,
+    fontsize_title = options$fontsize_title,
+    hjust_title = options$hjust_title,
+    fontsize_axis_title_y = options$fontsize_axis_title_y
+  )
+
+
+gg <- gg + ggplot2::scale_fill_manual(values = pal, na.value = na.value, name = "")
+
+# Add title and subtitle if provided
+if (!is.null(title) | !is.null(subtitle)) {
+  gg <- gg + ggplot2::ggtitle(title, subtitle)
+}
+
+# Return the plot
+return(gg)
+}
+
+#' Make a tooltip
+#'
+#' @param channels vector of channel names
+#' @param type vector of channel types
+#' @param mutations1 mutation counts for catalog 1 (numeric vector)
+#' @param mutations2 mutation counts for catalog 2 (numeric vector)
+#' @param name1 name of sample from which catalog 1 was derived (string)
+#' @param name2 name of sample from which catalog 2 was derived (string)
+#' @param pal named vector where names are mutation types and values are colours
+#'
+#' @return a character vector encoding the tooltip to display
+#'
+make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, pal){
+  # Add full tooltip to catalogue 2 with something more informative
+  colours <- type2colour(type, pal)
+  paste0(
+    span(channels, color = "white", color_bg = colours, font_weight = "bold"),
+    "<hr>",
+    span(name1, color = colours, font_weight = "bold"), ": ",
+    round(mutations1, digits = 1), " mutations",
+    "<br>",
+    span(name2, color = "black", font_weight = "bold"), ": ",
+    round(mutations2, digits = 1), " mutations",
+    "<hr>",
+    span("Difference", color = "black", font_weight = "bold"), ": ",
+    round(mutations1-mutations2, digits = 2), " mutations"
+  )
+}
+
 #' Visualise a signature overlayed on observed mutational profile
 #'
 #' @param signature a sigverse signature object representing the exposure model (data.frame)
 #' @param catalogue a sigverse catalogue (tally) representing an observed mutational profile (data.frame)
-#' @inheritParams sig_visualise
+#' @inheritParams sig_visualise_compare
+#' @inheritDotParams sig_visualise_compare
 #'
 #' @return a ggplot object.
 #' @export
@@ -165,11 +372,14 @@ sig_visualise <- function(signature, class = c('signature', 'catalogue', 'model'
 #' tally_single_sample <- tally[[sample]]
 #'
 #' # Visualise the overlay
-#' sig_visualise_overlay(
+#' gg <- sig_visualise_compare_reconstructed_to_observed(
 #'   catalogue = tally_single_sample,
 #'   signature = model_signature
 #' )
-sig_visualise_overlay <- function(signature, catalogue, channel_order = "auto", palette = "auto", na.value = "grey", subtitle = NULL, title = NULL, options = vis_options()){
+#'
+#' # Make interactive
+#' sig_make_interactive(gg)
+sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue, ...){
   # Assertions
   sigshared::assert_catalogue(catalogue)
   sigshared::assert_signature(signature)
@@ -184,115 +394,21 @@ sig_visualise_overlay <- function(signature, catalogue, channel_order = "auto", 
     msg = "Type of mutations in the catalogue and signature data.frames contain the same elements"
   )
 
-  # Determine channel and type order
-  if (length(channel_order) == 1 && channel_order == "auto") {
-    channel_levels = auto_level(signature[['channel']], type = "channel")
-    type_levels = auto_level(signature[['type']], type = "type")
-  }
-  else{
-    channel_levels = channel_order
-  }
+  # # Determine channel and type order
+  # if (length(channel_order) == 1 && channel_order == "auto") {
+  #   channel_levels = auto_level(signature[['channel']], type = "channel")
+  #   type_levels = auto_level(signature[['type']], type = "type")
+  # }
+  # else{
+  #   channel_levels = channel_order
+  # }
 
   # Turn Signature Into a Catalogue
   total_mutations <- sum(catalogue[["count"]])
   catalogue_reconstructed <- sigstats::sig_reconstruct(signature, total_mutations)
 
-  # Convert to factors and reorder
-  catalogue_reconstructed[['type']] <- forcats::as_factor(catalogue_reconstructed[['type']])
-  catalogue_reconstructed[['channel']] <- forcats::as_factor(catalogue_reconstructed[['channel']])
-  catalogue_reconstructed[['type']] <- forcats::fct_relevel(catalogue_reconstructed[['type']], type_levels)
-  catalogue_reconstructed[['channel']] <- forcats::fct_relevel(catalogue_reconstructed[['channel']], channel_levels)
-
-  # Convert to factors and reorder
-  catalogue[['type']] <- forcats::as_factor(catalogue[['type']])
-  catalogue[['channel']] <- forcats::as_factor(catalogue[['channel']])
-  catalogue[['type']] <- forcats::fct_relevel(catalogue[['type']], type_levels)
-  catalogue[['channel']] <- forcats::fct_relevel(catalogue[['channel']], channel_levels)
-
-
-  # Add and sort columns so catalogue and signature dataframe can be row-bound
-  col_order <- c("channel", "type", "fraction", "count", "datatype", "tooltip", "data_id")
-  catalogue[["datatype"]] <- "observed"
-  catalogue[["data_id"]] <- paste(catalogue[["type"]], catalogue[["channel"]])
-  catalogue[["tooltip"]] <- catalogue[["fraction"]]
-
-  catalogue <- catalogue[, col_order]
-
-  catalogue_reconstructed[["datatype"]] <- "reconstructed"
-  catalogue_reconstructed[["data_id"]] <- paste(catalogue_reconstructed[["type"]], catalogue_reconstructed[["channel"]])
-  catalogue_reconstructed[["matched_channel_observed"]] <- catalogue[["count"]][match(catalogue_reconstructed[["data_id"]], catalogue[["data_id"]])]
-
-  catalogue_reconstructed[["tooltip"]] <- paste0(
-    catalogue_reconstructed[["channel"]], "<br>",
-    "Observed: ",
-    round(catalogue_reconstructed[["matched_channel_observed"]], digits = 1), " mutations",
-    "<br>",
-    "Reconstructed: ",
-    round(catalogue_reconstructed[["count"]], digits = 1), " mutations"
-    )
-  catalogue_reconstructed <- catalogue_reconstructed[, col_order]
-
-  # Combine catalogue and signature data
-  # df_combined <- rbind(catalogue, signature)
-
-  # Create the main plot
-  gg <- ggplot() +
-    ggiraph::geom_col_interactive(
-      data = catalogue,
-      mapping = aes(
-        x = .data[["channel"]],
-        y = .data[["count"]],
-        data_id = .data[["data_id"]],
-        #tooltip = .data[["tooltip"]]
-      ),
-      position = "identity",
-      fill = "white",
-      color = "black",
-      width = 1
-    ) +
-    ggplot2::scale_y_continuous(
-      name = "Count",
-      labels = scales::label_number(accuracy = 1, big.mark = ','),
-      expand = expansion(mult = c(0,0.05))
-      ) +
-    ggiraph::geom_col_interactive(
-      data = catalogue_reconstructed,
-      mapping = aes(
-        x = .data[["channel"]],
-        y = .data[["count"]],
-        fill = .data[["type"]],
-        data_id = .data[["data_id"]],
-        tooltip = .data[["tooltip"]]
-      ),
-      hover_nearest = TRUE,
-      position = "identity",
-      linewidth = 0,
-      width = 0.5,
-      alpha = 0.8
-    ) +
-    xlab(NULL) +
-    theme_sigverse() +
-    theme_sigverse(
-      fontsize_x = options$fontsize_x,
-      fontsize_y = options$fontsize_y,
-      fontsize_title = options$fontsize_title,
-      hjust_title = options$hjust_title
-    )
-
-  # Determine colors
-  if (length(palette) == 1 && palette == "auto") {
-    pal <- auto_palette(unique(as.character(signature[['type']])), default = pal_set2())
-  } else {
-    assertions::assert_vector(palette)
-    assertions::assert_names_include(palette, signature[['type']])
-    pal <- palette
-  }
-  gg <- gg + ggplot2::scale_fill_manual(values = pal, na.value = na.value, name = "")
-
-  # Add title and subtitle if provided
-  if (!is.null(title) | !is.null(subtitle)) {
-    gg <- gg + ggplot2::ggtitle(title, subtitle)
-  }
+  # Compare reconstructed vs signature
+  gg <- sig_visualise_compare(catalogue1 = catalogue_reconstructed, catalogue2 = catalogue, names = c("Reconstructed", "Observed"), ...)
 
   # Return the plot
   return(gg)
@@ -308,11 +424,11 @@ sig_visualise_overlay <- function(signature, catalogue, channel_order = "auto", 
 #' @return ggplot2 theme
 #' @export
 #'
-theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title = NULL, hjust_title = 0.5, ...){
+theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title = NULL, hjust_title = 0.5, fontsize_axis_title_y = NULL, ...){
   ggplot2::theme_bw(...) %+replace%
     theme(
       axis.text.x = ggplot2::element_text(angle = 90),
-      axis.title.y = ggplot2::element_text(face = "bold", angle = 90),
+      axis.title.y = ggplot2::element_text(size = fontsize_axis_title_y, face = "bold", angle = 90),
       panel.grid.major.x = ggplot2::element_blank(),
       axis.text.x.bottom = ggplot2::element_text(size = fontsize_x),
       axis.text.y.left = ggplot2::element_text(size = fontsize_y),
@@ -334,54 +450,48 @@ theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title 
 #' @param fontsize_y fontsize of y axis text (number)
 #' @param hjust_title title horizontal justification (number)
 #' @param fontsize_title fontsize of title (number)
-#'
+#' @param fontsize_axis_title_y fontsize of the y axis title (number)
 #' @return A list of visualization options.
 #'
 #' @export
 #'
-vis_options <- function(fontsize_x = 6, fontsize_y = 9, hjust_title = 0.5, fontsize_title = 16){
+vis_options <- function(fontsize_x = 6, fontsize_y = 9, hjust_title = 0.5, fontsize_title = 16, fontsize_axis_title_y = 14){
   opts = list(
     fontsize_x = fontsize_x,
     fontsize_y = fontsize_y,
     hjust_title = hjust_title,
-    fontsize_title = fontsize_title
+    fontsize_title = fontsize_title,
+    fontsize_axis_title_y = fontsize_axis_title_y
   )
 
   return(opts)
 }
 
-#' Make any sigverse visualisation interactive
-#'
-#' @param gg the plot returned from any sigverse visualisation
-#'
-#' @return a ggiraph interactive visualisation
-#' @export
-#'
-sig_make_interactive <- function(gg){
-  ggiraph::girafe(ggobj = gg, width_svg = 12)
-}
 
 
 #' Make sigverse overlay visualisation interactive
 #'
 #' @param gg the plot returned from any sigverse visualisation
-#'
+#' @inheritParams ggiraph::girafe
 #' @return a ggiraph interactive visualisation
 #' @export
 #'
-sig_make_interactive_overlay <- function(gg){
-  ggi <- ggiraph::girafe(ggobj = gg, width_svg = 12)
+sig_make_interactive <- function(gg, width_svg = 12, height_svg = NULL){
+  ggi <- ggiraph::girafe(ggobj = gg, width_svg = width_svg, height_svg = height_svg)
   ggi <- ggiraph::girafe_options(
     ggi,
-    ggiraph::opts_hover(
-      css = "stroke-width: 2",
-      nearest_distance = 50
+      ggiraph::opts_hover(
+        css = "stroke-width: 2",
+        nearest_distance = 50
       ),
     ggiraph::opts_hover_inv(
       css = "fill-opacity:0.5; stroke-opacity: 0.5"
     ),
     ggiraph::opts_tooltip(
-      css = "background-color:#d8118c;color:white;padding:5px;border-radius:3px;", opacity = 1, use_fill = TRUE
+      css = ggiraph::girafe_css(
+        css = "background-color:white;color:black;padding:5px;border-radius:3px;border:2px solid black",line = "color:black"
+        ),
+      opacity = 1
       )
     )
   return(ggi)

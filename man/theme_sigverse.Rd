@@ -9,6 +9,7 @@ theme_sigverse(
   fontsize_y = NULL,
   fontsize_title = NULL,
   hjust_title = 0.5,
+  fontsize_axis_title_y = NULL,
   ...
 )
 }
@@ -20,6 +21,8 @@ theme_sigverse(
 \item{fontsize_title}{fontsize of title (number)}
 
 \item{hjust_title}{title horizontal justification (number)}
+
+\item{fontsize_axis_title_y}{fontsize of the y axis title (number)}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw}}
