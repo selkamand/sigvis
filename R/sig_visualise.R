@@ -473,6 +473,7 @@ vis_options <- function(fontsize_x = 6, fontsize_y = 9, hjust_title = 0.5, fonts
 #'
 #' @param gg the plot returned from any sigverse visualisation
 #' @inheritParams ggiraph::girafe
+#' @inheritParams ggiraph::opts_sizing
 #' @return a ggiraph interactive visualisation
 #' @export
 #'

@@ -22,6 +22,11 @@ graphic as it will be used to define viewbox attribute of the SVG result.
 If you use \code{girafe()} in an 'R Markdown' document, we
 recommend not using these arguments so that the knitr
 options \code{fig.width} and \code{fig.height} are used instead.}
+
+\item{rescale}{If FALSE, graphic will not be resized and the dimensions are exactly
+those of the svg. If TRUE the graphic will be resize to fit its container}
+
+\item{width}{widget width ratio (0 < width <= 1).}
 }
 \value{
 a ggiraph interactive visualisation
