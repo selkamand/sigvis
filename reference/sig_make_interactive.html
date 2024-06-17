@@ -54,7 +54,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sig_make_interactive</span><span class="op">(</span><span class="va">gg</span>, width_svg <span class="op">=</span> <span class="fl">12</span>, height_svg <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sig_make_interactive</span><span class="op">(</span></span>
+<span>  <span class="va">gg</span>,</span>
+<span>  width_svg <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>  height_svg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rescale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  width <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +76,15 @@ graphic as it will be used to define viewbox attribute of the SVG result.</p>
 <p>If you use <code>girafe()</code> in an 'R Markdown' document, we
 recommend not using these arguments so that the knitr
 options <code>fig.width</code> and <code>fig.height</code> are used instead.</p></dd>
+
+
+<dt>rescale</dt>
+<dd><p>If FALSE, graphic will not be resized and the dimensions are exactly
+those of the svg. If TRUE the graphic will be resize to fit its container</p></dd>
+
+
+<dt>width</dt>
+<dd><p>widget width ratio (0 &lt; width &lt;= 1).</p></dd>
 
 </dl></div>
     <div class="section level2">
