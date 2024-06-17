@@ -476,7 +476,7 @@ vis_options <- function(fontsize_x = 6, fontsize_y = 9, hjust_title = 0.5, fonts
 #' @return a ggiraph interactive visualisation
 #' @export
 #'
-sig_make_interactive <- function(gg, width_svg = 12, height_svg = NULL){
+sig_make_interactive <- function(gg, width_svg = 12, height_svg = NULL, rescale = FALSE, width = 1){
   ggi <- ggiraph::girafe(ggobj = gg, width_svg = width_svg, height_svg = height_svg)
   ggi <- ggiraph::girafe_options(
     ggi,
@@ -492,6 +492,9 @@ sig_make_interactive <- function(gg, width_svg = 12, height_svg = NULL){
         css = "background-color:white;color:black;padding:5px;border-radius:3px;border:2px solid black",line = "color:black"
         ),
       opacity = 1
+      ),
+    ggiraph::opts_sizing(
+      rescale = rescale, width = width
       )
     )
   return(ggi)

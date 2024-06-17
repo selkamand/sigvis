@@ -4,7 +4,13 @@
 \alias{sig_make_interactive}
 \title{Make sigverse overlay visualisation interactive}
 \usage{
-sig_make_interactive(gg, width_svg = 12, height_svg = NULL)
+sig_make_interactive(
+  gg,
+  width_svg = 12,
+  height_svg = NULL,
+  rescale = FALSE,
+  width = 1
+)
 }
 \arguments{
 \item{gg}{the plot returned from any sigverse visualisation}
