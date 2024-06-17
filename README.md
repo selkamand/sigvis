@@ -126,8 +126,7 @@ library(TCGAcatalogues) # For pulling example TCGA catalogue data
 signatures <- sig_load("COSMIC_v3.3.1_SBS_GRCh38")
 
 # Create a model (combination of signatures)
-model <- sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4)) 
-model_signature <- sig_combine_collapse_to_single_signature(model) # Should be an option in sig_combine
+model <- sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4), format = "signature")
 
 # Load a catalogue (Tally of variant types)
 tally <- catalogues_load("BRCA", type = "SBS_96")
@@ -139,7 +138,7 @@ tally_single_sample <- tally[[sample]]
 # Visualise the overlay
 sig_visualise_compare_reconstructed_to_observed(
   catalogue = tally_single_sample,
-  signature = model_signature
+  signature = model
 )
 #> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
 #> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
