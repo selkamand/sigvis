@@ -382,7 +382,7 @@ make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, p
 sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue, ...){
   # Assertions
   sigshared::assert_catalogue(catalogue)
-  sigshared::assert_signature(signature)
+  sigshared::assert_signature(signature, must_sum_to_one = FALSE)
 
   assertions::assert(
     setequal(catalogue[["channel"]], signature[["channel"]]),
