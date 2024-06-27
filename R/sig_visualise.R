@@ -46,7 +46,7 @@ sig_visualise <- function(signature, class = c('signature', 'catalogue', 'model'
 
   class <- rlang::arg_match(class)
   if (class == "signature") {
-    sigshared::assert_signature(signature)
+    sigshared::assert_signature(signature, must_sum_to_one = FALSE)
 
     col_y = "fraction"
     col_data_id = "channel"
