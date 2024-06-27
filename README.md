@@ -102,7 +102,7 @@ the remaining 40%
 library(sigstats)
 
 # Visualise a model (combination of signatures)
-model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
+model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4), format = "combined")
 sig_visualise(model, class = 'model', title = "Model", subtitle = "Combination of SBS2 (60%) and SBS13 (40%)")
 #> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
 #> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order

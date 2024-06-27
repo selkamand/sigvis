@@ -36,7 +36,7 @@
 #' sig_visualise(brca_catalogues[["TCGA-3C-AALI-01A-11D-A41F-09"]], class = 'catalogue')
 #'
 #' # Visualise a model (combination of signatures
-#' model <- sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5))
+#' model <- sig_combine(signatures, model = c('SBS2' = 0.5, 'SBS13' = 0.5), format = "combined")
 #' sig_visualise(model, class = 'model')
 #'
 #' # Make Visualisations Interactive
@@ -361,8 +361,11 @@ make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, p
 #' signatures <- sig_load("COSMIC_v3.3.1_SBS_GRCh38")
 #'
 #' # Create a model (combination of signatures)
-#' model <- sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4))
-#' model_signature <- sig_combine_collapse_to_single_signature(model)
+#' model_signature <- sig_combine(
+#'   signatures,
+#'   model = c('SBS2' = 0.6, 'SBS13' = 0.4),
+#'   format = "signature"
+#' )
 #'
 #' # Load a catalogue (Tally of variant types)
 #' tally <- catalogues_load("BRCA", type = "SBS_96")
