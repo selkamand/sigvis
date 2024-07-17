@@ -1,69 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://selkamand.github.io/sigvis/404.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/articles/visualisation_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/index.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/auto_palette.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/make_tooltip.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/pal_set2.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_make_interactive.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_palette_cn_type.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_palette_doublet_type.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_palette_indel_type.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_palette_snv_type.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_visualise.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_visualise_compare.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sig_visualise_compare_reconstructed_to_observed.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/sigvis-package.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/theme_sigverse.html</loc>
-  </url>
-  <url>
-    <loc>https://selkamand.github.io/sigvis/reference/vis_options.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://selkamand.github.io/sigvis/404.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/LICENSE-text.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/LICENSE.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/articles/index.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/articles/visualisation_guide.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/authors.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/index.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/auto_palette.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/index.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/make_tooltip.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/pal_set2.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_make_interactive.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_palette_cn_type.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_palette_doublet_type.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_palette_indel_type.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_palette_snv_type.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_compare.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_compare_reconstructed_to_observed.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sigvis-package.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/theme_sigverse.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/vis_options.html</loc></url>
 </urlset>
+
