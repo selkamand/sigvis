@@ -4,7 +4,12 @@
 \alias{sig_visualise_compare_reconstructed_to_observed}
 \title{Visualise a signature overlayed on observed mutational profile}
 \usage{
-sig_visualise_compare_reconstructed_to_observed(signature, catalogue, ...)
+sig_visualise_compare_reconstructed_to_observed(
+  signature,
+  catalogue,
+  ...,
+  foreground = c("reconstructed", "observed")
+)
 }
 \arguments{
 \item{signature}{a sigverse signature object representing the exposure model (data.frame)}
@@ -24,6 +29,8 @@ sig_visualise_compare_reconstructed_to_observed(signature, catalogue, ...)
     \item{\code{na.value}}{colour to use when type = NA}
     \item{\code{options}}{other visualisation options. See \code{\link[=vis_options]{vis_options()}} for details}
   }}
+
+\item{foreground}{choose whether the signature or the catalogue are rendered in the foreground as coloured bars instead of in the background as a black outline  (one of \strong{reconstructed} or \strong{observed})}
 }
 \value{
 a ggplot object.
