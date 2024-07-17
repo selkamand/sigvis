@@ -346,6 +346,7 @@ make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, p
 #'
 #' @param signature a sigverse signature object representing the exposure model (data.frame)
 #' @param catalogue a sigverse catalogue (tally) representing an observed mutational profile (data.frame)
+#' @param foreground choose whether the signature or the catalogue are rendered in the foreground as coloured bars instead of in the background as a black outline  (one of \strong{reconstructed} or \strong{observed})
 #' @inheritParams sig_visualise_compare
 #' @inheritDotParams sig_visualise_compare
 #'
@@ -382,20 +383,20 @@ make_tooltip <- function(channels, type, mutations1, mutations2, name1, name2, p
 #'
 #' # Make interactive
 #' sig_make_interactive(gg)
-sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue, ...){
+sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue, ..., foreground = c("reconstructed", "observed")){
+
   # Assertions
   sigshared::assert_catalogue(catalogue)
   sigshared::assert_signature(signature, must_sum_to_one = FALSE)
-
   assertions::assert(
     setequal(catalogue[["channel"]], signature[["channel"]]),
     msg = "Channels in the catalogue and signature data.frames must contain the same elements"
   )
-
   assertions::assert(
     setequal(catalogue[["type"]], signature[["type"]]),
     msg = "Type of mutations in the catalogue and signature data.frames contain the same elements"
   )
+  foreground <- rlang::arg_match(foreground)
 
   # # Determine channel and type order
   # if (length(channel_order) == 1 && channel_order == "auto") {
@@ -410,8 +411,13 @@ sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue
   total_mutations <- sum(catalogue[["count"]])
   catalogue_reconstructed <- sigstats::sig_reconstruct(signature, total_mutations)
 
-  # Compare reconstructed vs signature
-  gg <- sig_visualise_compare(catalogue1 = catalogue_reconstructed, catalogue2 = catalogue, names = c("Reconstructed", "Observed"), ...)
+  # Choose which catalogue should be in the foreground
+  foreground_catalogue <- if(foreground == "observed") catalogue else catalogue_reconstructed
+  background_catalogue <- if(foreground == "observed") catalogue_reconstructed else catalogue
+  names <- if(foreground == "observed") c("Observed", "Reconstructed") else c("Reconstructed", "Observed")
+
+  # Compare reconstructed vs observed
+  gg <- sig_visualise_compare(catalogue1 = foreground_catalogue, catalogue2 = background_catalogue, names = names, ...)
 
   # Return the plot
   return(gg)
