@@ -16,7 +16,7 @@ sig_visualise(
 )
 }
 \arguments{
-\item{signature}{a sigverse signature object}
+\item{signature}{a sigverse style signature data.frame. See \code{\link[sigshared:signature]{sigshared::example_signature()}}.}
 
 \item{class}{type of input signature. Is it a signature (e.g. from sigstash database), a catalogue (e.g. from TCGAcatalogues or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)}
 

@@ -99,7 +99,13 @@ the remaining 40%
 
 ``` r
 # Load sigstats library for combining signature models
-library(sigstats)
+library(sigverse)
+#> ── Attaching core sigverse packages ───────────────────── sigverse 0.0.0.9000 ──
+#> ✔ sigshared 0.0.0.9000     ✔ sigstats  0.0.0.9000
+#> ✔ sigsim    0.0.0.9000     ✔ sigstory  1.0
+```
+
+``` r
 
 # Visualise a model (combination of signatures)
 model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4), format = "combined")
@@ -118,8 +124,6 @@ Visualise the catalogue expected from a signature model, where signature
 the remaining 40%, but overlay on top of the observed mutational process
 
 ``` r
-library(sigstats) # For combining signature models
-library(sigstash) # For pulling signatures
 library(TCGAcatalogues) # For pulling example TCGA catalogue data
 
 # Load Signature
@@ -146,3 +150,12 @@ sig_visualise_compare_reconstructed_to_observed(
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+### Visualise Bootstraps
+
+``` r
+bootstraps <- example_bootstraps()
+sig_visualise_bootstraps(bootstraps)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
