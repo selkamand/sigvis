@@ -80,7 +80,7 @@ Visualise the catalogue expected from a signature model, where signature 'SBS2' 
 
 ```{r fig.height=4, fig.width=10}
 # Load sigstats library for combining signature models
-library(sigstats)
+library(sigverse)
 
 # Visualise a model (combination of signatures)
 model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4), format = "combined")
@@ -93,8 +93,6 @@ sig_visualise(model, class = 'model', title = "Model", subtitle = "Combination o
 Visualise the catalogue expected from a signature model, where signature 'SBS2' explains 60% of the mutations in a sample, and 'SBS13' explains the remaining 40%, but overlay on top of the observed mutational process
 
 ```{r fig.height=4, fig.width=10}
-library(sigstats) # For combining signature models
-library(sigstash) # For pulling signatures
 library(TCGAcatalogues) # For pulling example TCGA catalogue data
 
 # Load Signature
@@ -115,5 +113,12 @@ sig_visualise_compare_reconstructed_to_observed(
   catalogue = tally_single_sample,
   signature = model
 )
+```
+
+### Visualise Bootstraps
+
+```{r fig.height=4, fig.width=10}
+bootstraps <- example_bootstraps()
+sig_visualise_bootstraps(bootstraps)
 ```
 

@@ -6,7 +6,7 @@
 #'
 #' If the channels match a known channel type, channel display order will instead be based on a predefined order
 #'
-#' @param signature a sigverse signature object
+#' @param signature a sigverse style signature data.frame. See [sigshared::example_signature()].
 #' @param class type of input signature. Is it a signature (e.g. from sigstash database), a catalogue (e.g. from TCGAcatalogues or a signature analysis), or a model (combination of signatures designed to approximate an observed mutational profile)
 #' @param title plot title
 #' @param subtitle plot subtitle
