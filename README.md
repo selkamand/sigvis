@@ -159,3 +159,23 @@ sig_visualise_bootstraps(bootstraps)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+### Visualise Signature Dotplot
+
+Visualise the contributions of a signature across an entire cohort (or a
+collection of bootstrap experiments)
+
+``` r
+dotplot_data <- example_dotplot_data()
+sig_visualise_dotplot(
+  dotplot_data, 
+  col_sample = "sample", 
+  col_contribution = "contribution",
+  col_fill = "sample_info",
+  palette_fill = c(sample_of_interest = "red", "cancer_type"="green", "other" = "black"),
+  sort_by = "palette_fill",
+  xlab = "SBS2"
+  )
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
