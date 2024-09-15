@@ -178,4 +178,4 @@ sig_visualise_dotplot(
   )
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-signature_dotplot-1.png" width="100%" />
