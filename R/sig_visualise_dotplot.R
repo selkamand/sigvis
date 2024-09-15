@@ -166,7 +166,16 @@ sig_visualise_dotplot <- function(
 #'     \item{\code{sample_info}}{Character vector indicating the group each sample belongs to ("sample_of_interest", "cancer_type", or "other").}
 #'   }
 #' @examples
-#' example_dotplot_data()
+#' dotplot_data <- example_dotplot_data()
+#' sig_visualise_dotplot(
+#'   dotplot_data,
+#'   col_sample = "sample",
+#'   col_contribution = "contribution",
+#'   col_fill = "sample_info",
+#'   palette_fill = c(sample_of_interest = "#D55E00", "cancer_type"="#009E73", "other" = "#000000"),
+#'   sort_by = "palette_fill",
+#'   xlab = "SBS2"
+#' )
 #'
 #' @export
 example_dotplot_data <- function() {

@@ -19,6 +19,15 @@ This function generates an example dataset to be used with \code{\link{sig_visua
 It returns a data frame containing sample identifiers, their contributions, and sample group information.
 }
 \examples{
-example_dotplot_data()
+dotplot_data <- example_dotplot_data()
+sig_visualise_dotplot(
+  dotplot_data,
+  col_sample = "sample",
+  col_contribution = "contribution",
+  col_fill = "sample_info",
+  palette_fill = c(sample_of_interest = "#D55E00", "cancer_type"="#009E73", "other" = "#000000"),
+  sort_by = "palette_fill",
+  xlab = "SBS2"
+)
 
 }
