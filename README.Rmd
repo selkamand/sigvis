@@ -127,7 +127,7 @@ sig_visualise_bootstraps(bootstraps)
 
 Visualise the contributions of a signature across an entire cohort (or a collection of bootstrap experiments)
 
-```{r fig.height=5, fig.width=4}
+```{r fig.height=4, fig.width=10}
 dotplot_data <- example_dotplot_data()
 sig_visualise_dotplot(
   dotplot_data, 
