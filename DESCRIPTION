@@ -35,5 +35,6 @@ Remotes:
     selkamand/sigstats,
     selkamand/sigstash,
     selkamand/TCGAcatalogues,
-    selkamand/boxplotstats
+    selkamand/boxplotstats,
+    selkamand/stringy
 VignetteBuilder: knitr
