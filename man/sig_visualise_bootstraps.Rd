@@ -9,6 +9,7 @@ sig_visualise_bootstraps(
   min_contribution_threshold = 0.05,
   pvalue = 0.05,
   horizontal = FALSE,
+  width = 0.6,
   ...
 )
 }
@@ -19,7 +20,9 @@ sig_visualise_bootstraps(
 
 \item{pvalue}{The p-value threshold for significance (default is 0.05). P values are computed using \code{\link[sigstats:sig_compute_experimental_p_value]{sigstats::sig_compute_experimental_p_value()}}}
 
-\item{horizontal}{flip the coordinates so that signatures are on the X axis and contributions are on the Y axis}
+\item{horizontal}{flip the coordinates so that signatures are on the X axis and contributions are on the Y axis.}
+
+\item{width}{Width of the boxplots (value between 0 and 1).}
 
 \item{...}{
   Arguments passed on to \code{\link[boxplotstats:plot_boxplot_stats]{boxplotstats::plot_boxplot_stats}}
