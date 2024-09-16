@@ -154,11 +154,21 @@ sig_visualise_compare_reconstructed_to_observed(
 ### Visualise Bootstraps
 
 ``` r
+# Small Example
 bootstraps <- example_bootstraps()
 sig_visualise_bootstraps(bootstraps)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+``` r
+
+# Larger (Horizontal) Example
+colo829_bootstraps <- example_bootstraps_colo829()
+sig_visualise_bootstraps(colo829_bootstraps, min_contribution_threshold = 0.05, pvalue = 0.05, horizontal = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 ### Visualise Signature Dotplot
 

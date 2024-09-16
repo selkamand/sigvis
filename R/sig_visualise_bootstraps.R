@@ -18,7 +18,7 @@
 #' sig_visualise_bootstraps(example_bootstraps())
 #'
 sig_visualise_bootstraps <- function(
-    bootstraps, min_contribution_threshold = 0.05, pvalue = 0.05, horizontal = FALSE, width = 0.6, ...
+    bootstraps, min_contribution_threshold = 0.05, pvalue = 0.05, horizontal = FALSE, width = 0.6, staplewidth = 0.8, ...
     ) {
   # Assert that the bootstraps dataframe is in the correct format
   sigshared::assert_bootstraps(bootstraps)
@@ -44,7 +44,8 @@ sig_visualise_bootstraps <- function(
     show_legend = FALSE,
     sort = TRUE,
     descending = if(horizontal) FALSE else TRUE,
-    width = width
+    width = width,
+    staplewidth=staplewidth
   ) +
     # Add vertical grid lines
     ggplot2::theme(panel.grid.major.x = ggplot2::element_line(linetype = "longdash", colour = "lightgrey")) +
@@ -70,3 +71,4 @@ sig_visualise_bootstraps <- function(
   }
   return(plot)
 }
+

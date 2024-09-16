@@ -10,6 +10,7 @@ sig_visualise_bootstraps(
   pvalue = 0.05,
   horizontal = FALSE,
   width = 0.6,
+  staplewidth = 0.8,
   ...
 )
 }
@@ -23,6 +24,9 @@ sig_visualise_bootstraps(
 \item{horizontal}{flip the coordinates so that signatures are on the X axis and contributions are on the Y axis.}
 
 \item{width}{Width of the boxplots (value between 0 and 1).}
+
+\item{staplewidth}{The relative width of staples to the width of the box.
+Staples mark the ends of the whiskers with a line.}
 
 \item{...}{
   Arguments passed on to \code{\link[boxplotstats:plot_boxplot_stats]{boxplotstats::plot_boxplot_stats}}
