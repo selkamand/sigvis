@@ -18,7 +18,9 @@
 #' sig_visualise_bootstraps(example_bootstraps())
 #'
 sig_visualise_bootstraps <- function(
-    bootstraps, min_contribution_threshold = 0.05, pvalue = 0.05, horizontal = FALSE, width = 0.6, staplewidth = 0.8, ...
+    bootstraps, min_contribution_threshold = 0.05, pvalue = 0.05,
+    horizontal = FALSE, width = 0.6, staplewidth = 0.8,
+    ...
     ) {
   # Assert that the bootstraps dataframe is in the correct format
   sigshared::assert_bootstraps(bootstraps)
@@ -52,7 +54,9 @@ sig_visualise_bootstraps <- function(
     # Add vertical line at the minimum contribution threshold
     ggplot2::geom_vline(xintercept = min_contribution_threshold, linetype = "dashed", colour = "red") +
     # Format x-axis labels as percentages
-    ggplot2::scale_x_continuous(labels = scales::label_percent()) +
+    ggplot2::scale_x_continuous(
+      labels = scales::label_percent(),
+      ) +
     # Define fill colors for significant and non-significant contributions
     ggplot2::scale_fill_manual(values = c("FALSE" = "grey80", "TRUE" = "#AFE1AF")) +
     # Define outline colors for significant and non-significant contributions
@@ -61,7 +65,7 @@ sig_visualise_bootstraps <- function(
 
   if(horizontal){
     plot <- plot +
-      ggplot2::coord_flip() +
+      ggplot2::coord_flip(xlim = c(0, NA), expand = TRUE, clip = "off") +
       ggplot2::theme(
         axis.text.x = ggplot2::element_text(angle = 90, vjust=0.5, hjust = 1),
         panel.grid.major.y = ggplot2::element_line(linetype = "longdash", colour = "lightgrey"),
