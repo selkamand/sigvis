@@ -28,11 +28,13 @@ Imports:
     ggplot2,
     rlang,
     scales,
-    sigshared (>= 0.0.0.9000)
-Remotes:  
+    sigshared (>= 0.0.0.9000),
+    stringy
+Remotes: 
     selkamand/sigshared,
     selkamand/sigstats,
     selkamand/sigstash,
     selkamand/TCGAcatalogues,
-    selkamand/boxplotstats
+    selkamand/boxplotstats,
+    selkamand/stringy
 VignetteBuilder: knitr
