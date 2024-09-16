@@ -7,7 +7,11 @@
 sig_visualise_bootstraps(
   bootstraps,
   min_contribution_threshold = 0.05,
-  pvalue = 0.05
+  pvalue = 0.05,
+  horizontal = FALSE,
+  width = 0.6,
+  staplewidth = 0.8,
+  ...
 )
 }
 \arguments{
@@ -16,6 +20,36 @@ sig_visualise_bootstraps(
 \item{min_contribution_threshold}{Numeric value representing the minimum contribution threshold to consider (default is 0.05). See threshold argument of \code{\link[sigstats:sig_compute_experimental_p_value]{sigstats::sig_compute_experimental_p_value()}}.}
 
 \item{pvalue}{The p-value threshold for significance (default is 0.05). P values are computed using \code{\link[sigstats:sig_compute_experimental_p_value]{sigstats::sig_compute_experimental_p_value()}}}
+
+\item{horizontal}{flip the coordinates so that signatures are on the X axis and contributions are on the Y axis.}
+
+\item{width}{Width of the boxplots (value between 0 and 1).}
+
+\item{staplewidth}{The relative width of staples to the width of the box.
+Staples mark the ends of the whiskers with a line.}
+
+\item{...}{
+  Arguments passed on to \code{\link[boxplotstats:plot_boxplot_stats]{boxplotstats::plot_boxplot_stats}}
+  \describe{
+    \item{\code{stats}}{A dataframe containing boxplot statistics with required columns: 'outlier_low_threshold',
+'outlier_high_threshold', 'median', 'q1', 'q3', and 'outliers'.}
+    \item{\code{xlab}}{A character string specifying the x-axis label. Default is "Value".}
+    \item{\code{ylab}}{A character string specifying the y-axis label. Default is "ID".}
+    \item{\code{delim}}{The delimiter used in the 'outliers' column for splitting string-based outliers into numeric values.
+Default is "|".}
+    \item{\code{sort}}{Logical, whether to sort boxplots by the 'median' column. Default is TRUE.}
+    \item{\code{descending}}{Logical, if sorting, whether to sort in descending order. Default is TRUE.}
+    \item{\code{col_fill}}{Optional column name for determining the fill color of the boxplot.}
+    \item{\code{col_colour}}{Optional column name for determining the outline color of the boxplot.}
+    \item{\code{col_tooltip}}{Optional column name for custom tooltips in the interactive plot. Default is a generated tooltip.}
+    \item{\code{col_data_id}}{Optional column name for the \code{data_id} used in interactivity.}
+    \item{\code{col_onclick}}{Optional column name for specifying the \code{onclick} actions in the interactive plot.}
+    \item{\code{show_legend}}{Logical, whether to show the legend for color and fill. Default is TRUE.}
+    \item{\code{dotsize}}{Size of outlier points. Default is 1.}
+    \item{\code{dotstroke}}{Stroke width of outlier points. Default is 1.}
+    \item{\code{dotshape}}{Shape of outlier points. Default is 1.}
+    \item{\code{linewidth}}{Width of the boxplot outlines. Default is 0.5.}
+  }}
 }
 \value{
 A ggplot object representing the boxplot visualization of bootstrap contributions.
