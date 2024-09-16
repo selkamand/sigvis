@@ -183,15 +183,22 @@
 <h3 id="visualise-bootstraps">Visualise Bootstraps<a class="anchor" aria-label="anchor" href="#visualise-bootstraps"></a>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bootstraps</span> <span class="op">&lt;-</span> <span class="fu">example_bootstraps</span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Small Example</span></span>
+<span><span class="va">bootstraps</span> <span class="op">&lt;-</span> <span class="fu">example_bootstraps</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/sig_visualise_bootstraps.html">sig_visualise_bootstraps</a></span><span class="op">(</span><span class="va">bootstraps</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Larger (Horizontal) Example</span></span>
+<span><span class="va">colo829_bootstraps</span> <span class="op">&lt;-</span> <span class="fu">example_bootstraps_colo829</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/sig_visualise_bootstraps.html">sig_visualise_bootstraps</a></span><span class="op">(</span><span class="va">colo829_bootstraps</span>, min_contribution_threshold <span class="op">=</span> <span class="fl">0.05</span>, pvalue <span class="op">=</span> <span class="fl">0.05</span>, horizontal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-6-2.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="visualise-signature-dotplot">Visualise Signature Dotplot<a class="anchor" aria-label="anchor" href="#visualise-signature-dotplot"></a>
 </h3>
 <p>Visualise the contributions of a signature across an entire cohort (or a collection of bootstrap experiments)</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dotplot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/example_dotplot_data.html">example_dotplot_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/sig_visualise_dotplot.html">sig_visualise_dotplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">dotplot_data</span>, </span>
