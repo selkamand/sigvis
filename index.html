@@ -187,6 +187,23 @@
 <span><span class="fu"><a href="reference/sig_visualise_bootstraps.html">sig_visualise_bootstraps</a></span><span class="op">(</span><span class="va">bootstraps</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
+<div class="section level3">
+<h3 id="visualise-signature-dotplot">Visualise Signature Dotplot<a class="anchor" aria-label="anchor" href="#visualise-signature-dotplot"></a>
+</h3>
+<p>Visualise the contributions of a signature across an entire cohort (or a collection of bootstrap experiments)</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dotplot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/example_dotplot_data.html">example_dotplot_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/sig_visualise_dotplot.html">sig_visualise_dotplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dotplot_data</span>, </span>
+<span>  col_sample <span class="op">=</span> <span class="st">"sample"</span>, </span>
+<span>  col_contribution <span class="op">=</span> <span class="st">"contribution"</span>,</span>
+<span>  col_fill <span class="op">=</span> <span class="st">"sample_info"</span>,</span>
+<span>  palette_fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sample_of_interest <span class="op">=</span> <span class="st">"#D55E00"</span>, <span class="st">"cancer_type"</span><span class="op">=</span><span class="st">"#009E73"</span>, <span class="st">"other"</span> <span class="op">=</span> <span class="st">"#000000"</span><span class="op">)</span>,</span>
+<span>  sort_by <span class="op">=</span> <span class="st">"palette_fill"</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"SBS2"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-signature_dotplot-1.png" width="100%"></p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
