@@ -10,6 +10,12 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/sigvis)](https://CRAN.R-project.org/package=sigvis)
 [![R-CMD-check](https://github.com/selkamand/sigvis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/selkamand/sigvis/actions/workflows/R-CMD-check.yaml)
+![GitHub Issues or Pull
+Requests](https://img.shields.io/github/issues-closed/selkamand/ggoncoplot)
+[![code
+size](https://img.shields.io/github/languages/code-size/selkamand/sigvis.svg)](https://github.com/selkamand/sigvis)
+![GitHub last
+commit](https://img.shields.io/github/last-commit/selkamand/sigvis)
 <!-- badges: end -->
 
 Create interactive visualisations that summarise mutational signature
