@@ -7,6 +7,7 @@
 #' @param min_contribution_threshold Numeric value representing the minimum contribution threshold to consider (default is 0.05). See threshold argument of [sigstats::sig_compute_experimental_p_value()].
 #' @param pvalue The p-value threshold for significance (default is 0.05). P values are computed using [sigstats::sig_compute_experimental_p_value()]
 #' @param horizontal flip the coordinates so that signatures are on the X axis and contributions are on the Y axis.
+#' @param title should a plot title be shown? (flag)
 #' @inheritParams boxplotstats::plot_boxplot_stats
 #' @inheritDotParams boxplotstats::plot_boxplot_stats
 #'
@@ -20,6 +21,7 @@
 sig_visualise_bootstraps <- function(
     bootstraps, min_contribution_threshold = 0.05, pvalue = 0.05,
     horizontal = FALSE, width = 0.6, staplewidth = 0.8,
+    title = TRUE,
     ...
     ) {
   # Assert that the bootstraps dataframe is in the correct format
@@ -27,6 +29,10 @@ sig_visualise_bootstraps <- function(
 
   # Summarize bootstrap statistics with minimum contribution threshold
   stats <- sigstats::sig_summarise_bootstraps(bootstraps, min_contribution_threshold)
+
+  # Check how many bootstraps were run for each signature
+  n_bootstraps <- unique(stats[["n"]])
+  assertions::assert(length(n_bootstraps) == 1, msg = "inconsistent number of bootstraps used to assess stability of different signatures. Please ensure you run the same number of bootstraps for every signature")
 
   # Determine significance based on p-value threshold
   stats[["significant"]] <- stats[["p_value"]] < pvalue
@@ -72,6 +78,12 @@ sig_visualise_bootstraps <- function(
         panel.grid.major.x = ggplot2::element_blank(),
         panel.grid.minor.y = ggplot2::element_blank(),
         )
+  }
+
+  # Add title to the plot
+  if(title){
+     plot <- plot + ggplot2::ggtitle(paste0("Signature stability across ", n_bootstraps, " bootstraps")) +
+       ggplot2::theme(plot.title = ggplot2::element_text(face = "bold", hjust = 0.5))
   }
   return(plot)
 }

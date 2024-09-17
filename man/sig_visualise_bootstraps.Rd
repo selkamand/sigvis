@@ -11,6 +11,7 @@ sig_visualise_bootstraps(
   horizontal = FALSE,
   width = 0.6,
   staplewidth = 0.8,
+  title = TRUE,
   ...
 )
 }
@@ -27,6 +28,8 @@ sig_visualise_bootstraps(
 
 \item{staplewidth}{The relative width of staples to the width of the box.
 Staples mark the ends of the whiskers with a line.}
+
+\item{title}{should a plot title be shown? (flag)}
 
 \item{...}{
   Arguments passed on to \code{\link[boxplotstats:plot_boxplot_stats]{boxplotstats::plot_boxplot_stats}}
