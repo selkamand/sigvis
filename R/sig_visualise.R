@@ -222,7 +222,6 @@ catalogue2 <- catalogue2[,c("data_id","count", "fraction")]
 # Left Join to make 1 wide table
 catalogue <- merge(catalogue1, catalogue2, by = "data_id", all.x = TRUE, suffixes = c(".c1", ".c2"))
 
-
 # Determine colors
 if (length(palette) == 1 && palette == "auto") {
   pal <- auto_palette(unique(as.character(catalogue1[['type']])), default = pal_set2())

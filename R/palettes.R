@@ -67,10 +67,23 @@ sig_palette_indel_type = function(){
   )
 }
 
+
 #' @inherit sig_palette_snv_type title description details seealso sections references examples
 #' @export
 sig_palette_cn_type = function(){
+  c(
+    "0" = "#0600CF",
+    "1" = "#545454",
+    "2" = "#228935",
+    "3-4" = "#7F1CC8",
+    "5-8" = "#D28526",
+    "9+" = "#850B49"
+  )
+}
 
+#' @inherit sig_palette_snv_type title description details seealso sections references examples
+#' @export
+sig_palette_cn2_type = function(){
   c(
     "HD:0" = "#0600CF",
     "LOH:1" = "#545454",
@@ -83,9 +96,18 @@ sig_palette_cn_type = function(){
     "Het:5-8:" = "#D1812A",
     "Het:9+" = "#850B49"
   )
-
 }
 
+#' @inherit sig_palette_snv_type title description details seealso sections references examples
+#' @export
+sig_palette_sv_type <- function(){
+  c(
+    "Deletion" = "#8B4512",
+    "Tandem Duplication" = "#A72624",
+    "Inversion" = "#038791",
+    "Translocation" = "#068C82"
+  )
+}
 
 #' The set2 colour palette
 #'
@@ -126,7 +148,10 @@ auto_palette <- function(types, default = pal_set2()){
   ls_pals <- list(
     snv_type = sig_palette_snv_type(),
     indel_type = sig_palette_indel_type(),
-    dbs_type = sig_palette_doublet_type()
+    dbs_type = sig_palette_doublet_type(),
+    cn_type = sig_palette_cn_type(),
+    cn2_type = sig_palette_cn2_type(),
+    sv_type = sig_palette_sv_type()
     )
 
   n_matches = vapply(ls_pals, \(pal){ sum(types %in% names(pal)) }, FUN.VALUE = numeric(1))
@@ -240,6 +265,58 @@ levels_dbs <- function(){
 }
 
 
+levels_cn <- function(){
+  c("0:homdel:0-100kb", "0:homdel:100kb-1Mb", "0:homdel:>1Mb",
+    "1:LOH:0-100kb", "1:LOH:100kb-1Mb", "1:LOH:1Mb-10Mb", "1:LOH:10Mb-40Mb", "1:LOH:>40Mb",
+    "2:LOH:0-100kb", "2:LOH:100kb-1Mb", "2:LOH:1Mb-10Mb", "2:LOH:10Mb-40Mb", "2:LOH:>40Mb",
+    "3-4:LOH:0-100kb", "3-4:LOH:100kb-1Mb", "3-4:LOH:1Mb-10Mb", "3-4:LOH:10Mb-40Mb", "3-4:LOH:>40Mb",
+    "5-8:LOH:0-100kb", "5-8:LOH:100kb-1Mb", "5-8:LOH:1Mb-10Mb", "5-8:LOH:10Mb-40Mb", "5-8:LOH:>40Mb",
+    "9+:LOH:0-100kb", "9+:LOH:100kb-1Mb", "9+:LOH:1Mb-10Mb", "9+:LOH:10Mb-40Mb", "9+:LOH:>40Mb",
+    "2:het:0-100kb", "2:het:100kb-1Mb", "2:het:1Mb-10Mb", "2:het:10Mb-40Mb", "2:het:>40Mb",
+    "3-4:het:0-100kb", "3-4:het:100kb-1Mb", "3-4:het:1Mb-10Mb", "3-4:het:10Mb-40Mb", "3-4:het:>40Mb",
+    "5-8:het:0-100kb", "5-8:het:100kb-1Mb", "5-8:het:1Mb-10Mb", "5-8:het:10Mb-40Mb", "5-8:het:>40Mb",
+    "9+:het:0-100kb", "9+:het:100kb-1Mb", "9+:het:1Mb-10Mb", "9+:het:10Mb-40Mb", "9+:het:>40Mb"
+  )
+}
+
+levels_cn_type <- function(){
+  c("0", "1", "2", "3-4", "5-8", "9+")
+}
+
+
+levels_cn2_type <- function(){
+  c("HD:0", "LOH:1", "LOH:2", "LOH:3-4", "LOH:5-8", "LOH:9+", "Het:2",
+    "Het:3-4", "Het:5-8", "Het:9+")
+}
+
+
+levels_sv <- function(){
+  c("clustered_del_1-10Kb", "clustered_del_10-100Kb", "clustered_del_100Kb-1Mb",
+    "clustered_del_1Mb-10Mb", "clustered_del_>10Mb", "clustered_tds_1-10Kb",
+    "clustered_tds_10-100Kb", "clustered_tds_100Kb-1Mb", "clustered_tds_1Mb-10Mb",
+    "clustered_tds_>10Mb", "clustered_inv_1-10Kb", "clustered_inv_10-100Kb",
+    "clustered_inv_100Kb-1Mb", "clustered_inv_1Mb-10Mb", "clustered_inv_>10Mb",
+    "clustered_trans", "non-clustered_del_1-10Kb", "non-clustered_del_10-100Kb",
+    "non-clustered_del_100Kb-1Mb", "non-clustered_del_1Mb-10Mb",
+    "non-clustered_del_>10Mb", "non-clustered_tds_1-10Kb", "non-clustered_tds_10-100Kb",
+    "non-clustered_tds_100Kb-1Mb", "non-clustered_tds_1Mb-10Mb",
+    "non-clustered_tds_>10Mb", "non-clustered_inv_1-10Kb", "non-clustered_inv_10-100Kb",
+    "non-clustered_inv_100Kb-1Mb", "non-clustered_inv_1Mb-10Mb",
+    "non-clustered_inv_>10Mb", "non-clustered_trans")
+}
+
+levels_sv_type <- function(){
+  c("Deletion",
+    "Tandem Duplication",
+    "Inversion",
+    "Translocation"
+  )
+}
+
+
+
+
+# Autosort Levels -------------------------------------------------------
 # Takes a set of channel / types and if theres an exact match in channel_sets, sort in the sigvis defined order.
 # Otherwise return the unique set that was inserted excapt in alphabetical order
 auto_level <- function(set, type = c('channel', 'type')) {
@@ -253,7 +330,12 @@ auto_level <- function(set, type = c('channel', 'type')) {
     indel_type = levels_indel_type(),
     id_83 = levels_indel(),
     doublet_type = levels_doublet_type(),
-    dbs_78 = levels_dbs()
+    dbs_78 = levels_dbs(),
+    cn_48 = levels_cn(),
+    cn_type = levels_cn_type(),
+    cn2_type = levels_cn2_type(),
+    sv_32 = levels_sv(),
+    sv_type = levels_sv_type()
   )
 
   # Check if unique set match any known channel/type set
