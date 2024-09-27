@@ -4,12 +4,14 @@
 \alias{auto_palette}
 \title{Automatically select a color palette based on signature types}
 \usage{
-auto_palette(types, default = pal_set2())
+auto_palette(types, default = pal_set2(), verbose = TRUE)
 }
 \arguments{
 \item{types}{A character vector of types e.g. from a sigverse signature 'type' column.}
 
 \item{default}{The default color palette to use if no exact match is found.}
+
+\item{verbose}{verbose (flag)}
 }
 \value{
 A color palette (named vector where names are types and values are colours).
