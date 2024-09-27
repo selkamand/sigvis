@@ -55,7 +55,7 @@ test_that("sig_visualise auto-colouring works with signatures", {
     )
   )
 
-  expect_no_message(sig_visualise(df_catalogue), message = "No exact .* match")
+  sm(expect_no_message(sig_visualise(df_catalogue), message = "No exact .* match"))
 })
 
 
@@ -68,7 +68,7 @@ test_that("sig_visualise auto-colouring/sorting works on all sigvis collections"
   for (dataset in datasets){
     collection <- sigstash::sig_load(dataset = dataset)
     signature <- collection[[1]]
-    expect_no_message(sig_visualise(signature), message = "No exact .* match")
+    sm(expect_no_message(sig_visualise(signature), message = "No exact .* match"))
   }
 
 })

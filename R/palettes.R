@@ -150,7 +150,7 @@ pal_set2 <- function(){
 #'
 #' @param types A character vector of types e.g. from a sigverse signature 'type' column.
 #' @param default The default color palette to use if no exact match is found.
-#'
+#' @param verbose verbose (flag)
 #' @return A color palette (named vector where names are types and values are colours).
 #'
 #' @importFrom stats na.omit
@@ -160,7 +160,7 @@ pal_set2 <- function(){
 #' auto_palette(c("T>G", "T>G"))
 #' }
 #'
-auto_palette <- function(types, default = pal_set2()){
+auto_palette <- function(types, default = pal_set2(), verbose = TRUE){
   assertions::assert_character(types)
   types <- na.omit(types)
 
@@ -174,13 +174,25 @@ auto_palette <- function(types, default = pal_set2()){
     rnasnv_type = sig_palette_rnasnv_type()
     )
 
+  # Check if there are any duplicated palettes
+  indistinguishable_palettes <- get_indistinguishable_palettes(ls_pals)
+  if(length(indistinguishable_palettes) > 0){
+   cli::cli_abort(
+     "Not all sigvis palettes are distinguishable.
+     Please create a new issue at {.url https://github.com/selkamand/sigvis/issues} flagging that the following palettes are indistinguishable:
+     [{indistinguishable_palettes}]",
+     )
+  }
+
   n_matches = vapply(ls_pals, \(pal){ sum(types %in% names(pal)) }, FUN.VALUE = numeric(1))
   names(n_matches) <- names(n_matches)
-  all_matched <- n_matches == length(types)
-  palettes_matched <- names(Filter(f = isTRUE, all_matched))
+  palette_perfectly_match_status = vapply(ls_pals, \(pal){ setequal(types, names(pal)) }, FUN.VALUE = logical(1))
 
-  if(length(palettes_matched) == 1){
-    cli::cli_alert_success('Types matched perfectly to palette [{palettes_matched}]')
+  all_matched <- n_matches == length(types)
+  palettes_matched <- names(Filter(f = isTRUE, palette_perfectly_match_status))
+
+  if(sum(palette_perfectly_match_status) == 1){
+    if(verbose) cli::cli_alert_success('Types matched perfectly to palette [{palettes_matched}]')
     return(ls_pals[[palettes_matched]])
   }
   else if(length(palettes_matched) == 0 & any(n_matches >= 2)){
@@ -190,14 +202,16 @@ auto_palette <- function(types, default = pal_set2()){
     number_types = length(types)
 
     not_matched <- ls_pals[[best_match]]
-    cli::cli_alert_warning(
-    'No exact palette match, returning default
-    The [{best_match}] palette was the closest match, with {best_match_n} / {number_types} type{?s} matching.'
-    )
+    if(verbose) {
+      cli::cli_alert_warning(
+      'No exact palette match, returning default
+      The [{best_match}] palette was the closest match, with {best_match_n} / {number_types} type{?s} matching.'
+      )
+    }
     return(default)
   }
   else{
-    cli::cli_alert_warning('No exact palette matches, returning default. It is highly recommended to supply a custom palette. See the {.arg palette} argument')
+    if(verbose) cli::cli_alert_warning('No exact palette matches, returning default. It is highly recommended to supply a custom palette. See the {.arg palette} argument')
     return(default)
   }
 }
@@ -430,9 +444,9 @@ auto_level <- function(set, type = c('channel', 'type')) {
   # Check if unique set match any known channel/type set
   matching_set <- NULL
   for (set_name in names(channel_sets)) {
-    lgl_matching_set <- unique_set %in% channel_sets[[set_name]]
+    matches_set <- setequal(unique_set, channel_sets[[set_name]])
 
-    if (all(lgl_matching_set)) {
+    if (matches_set) {
       cli::cli_alert_success('All {type}s matched perfectly to set [{set_name}]. Using this set for sort order')
       return(channel_sets[[set_name]])
     }
@@ -454,3 +468,15 @@ type2colour <- function(type, palette, na.value = "grey"){
   return(colours)
 
 }
+
+
+# Return duplicated elements
+# get_indistinguishable_palettes(list(1:5, "Billy" = c("a"= 3,"b"= 4), "bob" = c("a" = 5, "b" = 3)))
+get_indistinguishable_palettes <- function(ls){
+  list_of_names <- lapply(ls, \(x) {names(x)})
+  duplicates = duplicated(list_of_names) | duplicated(list_of_names, fromLast=TRUE)
+  names(ls[duplicates])
+}
+
+# Suppress messages
+sm <- suppressMessages
