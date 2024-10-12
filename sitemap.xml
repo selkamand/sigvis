@@ -8,6 +8,8 @@
 <url><loc>https://selkamand.github.io/sigvis/index.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/auto_palette.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/example_dotplot_data.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/example_umap.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/example_umap_metadata.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/index.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/make_tooltip.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/pal_set2.html</loc></url>
@@ -23,6 +25,7 @@
 <url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_bootstraps.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_compare.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_compare_reconstructed_to_observed.html</loc></url>
+<url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_dimred.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/sig_visualise_dotplot.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/sigvis-package.html</loc></url>
 <url><loc>https://selkamand.github.io/sigvis/reference/theme_sigverse.html</loc></url>
