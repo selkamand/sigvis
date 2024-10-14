@@ -20,7 +20,7 @@ proportion_bar <- function(proportion, format = fmt_percent, fgcol = "maroon", b
     measure = c("contribution", "all")
   )
 
-  ggplot2::ggplot(dd, ggplot2::aes(x = contribution, y = "")) +
+  ggplot2::ggplot(dd, ggplot2::aes(x = .data[["contribution"]], y = "")) +
     ggplot2::geom_col(fill = c(fgcol, bgcol)) +
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
     ggplot2::annotate(
