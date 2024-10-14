@@ -84,9 +84,6 @@ tally_single_sample
 #>  9 A[C>T]A C>T   0.00402      8
 #> 10 A[C>T]C C>T   0.00151      3
 #> # ℹ 86 more rows
-```
-
-``` r
 
 # Visualise Observed Mutational Profile
 sig_visualise(tally_single_sample, class = "catalogue", title = sample)
@@ -108,10 +105,7 @@ the remaining 40%
 library(sigverse)
 #> ── Attaching core sigverse packages ───────────────────── sigverse 0.0.0.9000 ──
 #> ✔ sigshared 0.0.0.9000     ✔ sigstats  0.0.0.9000
-#> ✔ sigsim    0.0.0.9000     ✔ sigstory  1.0
-```
-
-``` r
+#> ✔ sigsim    0.0.0.9000     ✔ sigstory  0.0.0.9000
 
 # Visualise a model (combination of signatures)
 model = sig_combine(signatures, model = c('SBS2' = 0.6, 'SBS13' = 0.4), format = "combined")
@@ -195,3 +189,19 @@ sig_visualise_dotplot(
 ```
 
 <img src="man/figures/README-signature_dotplot-1.png" width="100%" />
+
+### Visualise Signature + Bar
+
+For explanatory signatures and similar samples. See
+[sigstory](https://github.com/selkamand/sigstory) for examples of why we
+need.
+
+``` r
+# Quick reference visualisation of SBS2 that explains 40% of a sample
+sig_visualise_minified(signature = SBS2, proportion = 0.4)
+#> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
+#> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
+#> ✔ Types matched perfectly to palette [snv_type]
+```
+
+<img src="man/figures/README-minified-1.png" width="100%" />
