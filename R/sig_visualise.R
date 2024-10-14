@@ -423,32 +423,6 @@ sig_visualise_compare_reconstructed_to_observed <- function(signature, catalogue
 
 }
 
-#' Sigverse Theme for Signature Plots
-#'
-#'
-#' @importFrom ggplot2 %+replace%
-#' @inheritDotParams ggplot2::theme_bw
-#' @inheritParams vis_options
-#' @return ggplot2 theme
-#' @export
-#'
-theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title = NULL, hjust_title = 0.5, fontsize_axis_title_y = NULL, ...){
-  ggplot2::theme_bw(...) %+replace%
-    theme(
-      axis.text.x = ggplot2::element_text(angle = 90),
-      axis.title.y = ggplot2::element_text(size = fontsize_axis_title_y, face = "bold", angle = 90),
-      panel.grid.major.x = ggplot2::element_blank(),
-      axis.text.x.bottom = ggplot2::element_text(size = fontsize_x),
-      axis.text.y.left = ggplot2::element_text(size = fontsize_y),
-      axis.ticks.x = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(fill = "black"),
-      strip.text = ggplot2::element_text(colour = "white", face = "bold"),
-      panel.border = ggplot2::element_blank(),
-      plot.title = ggplot2::element_text(face = "bold", hjust = hjust_title, size = fontsize_title),
-      plot.subtitle = ggplot2::element_text(hjust = hjust_title, vjust = 0, margin = ggplot2::margin(5, 2, 0, 2))
-      )
-}
 
 #' Set Visualization Options for Signature Plots
 #'
