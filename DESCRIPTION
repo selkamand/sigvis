@@ -26,6 +26,7 @@ Imports:
     forcats,
     ggiraph,
     ggplot2,
+    patchwork,
     rlang,
     scales,
     sigshared (>= 0.0.0.9000),

@@ -40,12 +40,14 @@ theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title 
 theme_minisig <- function(...){
   ggplot2::theme_bw(...) %+replace%
     theme(
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
       legend.position = "none",
-      axis.text.x.bottom= ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank(),
-      axis.title.y = ggplot2::element_blank(),
-      axis.text.y.left = ggplot2::element_blank(),
-      axis.ticks.y = ggplot2::element_blank(),
+      axis.text.x.bottom= element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.y.left = element_blank(),
+      axis.ticks.y = element_blank(),
       axis.line.x.bottom = ggplot2::element_line(linewidth = 1)
     )
 }

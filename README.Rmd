@@ -150,3 +150,12 @@ sig_visualise_dotplot(
   )
 ```
 
+### Visualise Signature + Bar
+
+For explanatory signatures and similar samples. See [sigstory](https://github.com/selkamand/sigstory) for examples of why we need. 
+
+```{r minified, fig.height=1.5, fig.width=3}
+# Quick reference visualisation of SBS2 that explains 40% of a sample
+sig_visualise_minified(signature = SBS2, proportion = 0.4)
+```
+
