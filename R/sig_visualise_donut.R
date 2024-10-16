@@ -39,11 +39,12 @@ sig_visualise_donut <- function(proportions, unexplained_label = "Unexplained", 
 
   # Reorder labels based on proportions for cleaner plotting
   data[["labels"]] <- forcats::fct_reorder(data[["labels"]], data[["proportion"]])
+  data[["tooltip"]] <- paste0(data[["labels"]], " (", fmt_percent(data[["proportion"]], digits = 0, space = FALSE), ")")
 
   # Create the donut plot
-  gg_donut <- ggplot(data, aes(x = proportion, y = "", fill = labels)) +
+  gg_donut <- ggplot(data, aes(x = .data[["proportion"]], y = "", fill = .data[["labels"]])) +
     # Use ggiraph for interactive tooltip and copy-to-clipboard functionality
-    ggiraph::geom_col_interactive(aes(data_id = labels, tooltip = labels, onclick = paste0('navigator.clipboard.writeText("', labels, '")'))) +
+    ggiraph::geom_col_interactive(aes(data_id = .data[["labels"]], tooltip = .data[["tooltip"]], onclick = paste0('navigator.clipboard.writeText("', .data[["labels"]], '")'))) +
     # Convert bar plot to radial (donut) with specified inner radius
     ggplot2::coord_radial(inner.radius = inner_radius, direction = 1, expand = FALSE) +
     # Add legend with optional title

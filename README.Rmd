@@ -163,6 +163,6 @@ sig_visualise_minified(signature = SBS2, proportion = 0.4)
 
 ```{r, donut_model, fig.height=4, fig.width=10}
 model = c('SBS2' = 0.6, 'SBS13' = 0.2)
-sig_visualise_model_donut(model, palette = c(SBS2="#E72826", SBS13="black", "Unexplained" = "grey90"))
+sig_visualise_donut(model, palette = c(SBS2="#E72826", SBS13="black", "Unexplained" = "grey90"))
 ```
 
