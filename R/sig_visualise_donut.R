@@ -15,6 +15,7 @@
 #'
 sig_visualise_donut <- function(proportions, unexplained_label = "Unexplained", inner_radius = 0.6, palette = NULL, guide_title = NULL) {
 
+  if(!is.null(guide_title)) assertions::assert_string(guide_title)
   # Ensure the 'proportions' input is valid
   sigshared::assert_model(proportions)
 
