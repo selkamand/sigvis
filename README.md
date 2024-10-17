@@ -205,3 +205,12 @@ sig_visualise_minified(signature = SBS2, proportion = 0.4)
 ```
 
 <img src="man/figures/README-minified-1.png" width="100%" />
+
+### Visualise Signature Model as Donut
+
+``` r
+model = c('SBS2' = 0.6, 'SBS13' = 0.2)
+sig_visualise_donut(model, palette = c(SBS2="#E72826", SBS13="black", "Unexplained" = "grey90"))
+```
+
+<img src="man/figures/README-donut_model-1.png" width="100%" />
