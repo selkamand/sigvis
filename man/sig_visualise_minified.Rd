@@ -35,6 +35,8 @@ sig_visualise_minified(
 \item{textcol}{Colour of proportion label when \code{proportion} is less than \code{proportion_inversion_point}}
 
 \item{textcol_inverted}{Colour of proportion label when \code{proportion} greater than \code{proportion_inversion_point}}
+
+\item{proportion_inversion_point}{The proportion above which the proportion will be rendered on top of progress bar, not}
 }
 \value{
 A combined ggplot object of the signature plot and proportion bar.

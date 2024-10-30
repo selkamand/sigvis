@@ -9,8 +9,7 @@
 #' @param size Numeric value for the text size of the proportion label. Defaults to `NA`.
 #' @param textcol Colour of proportion label when `proportion` is less than `proportion_inversion_point`
 #' @param textcol_inverted Colour of proportion label when `proportion` greater than `proportion_inversion_point`
-#' @param proportion_flip_point The proportion above which the proportion will be rendered on top of progress bar, not
-#' @param text_inversion
+#' @param proportion_inversion_point The proportion above which the proportion will be rendered on top of progress bar, not
 #'
 #' @return A ggplot object representing the proportion bar plot.
 #' @export
