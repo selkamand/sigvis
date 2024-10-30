@@ -7,7 +7,7 @@
 sig_visualise_minified(
   signature,
   proportion,
-  format = fmt_percent,
+  format = fmt_percent(),
   fgcol = "maroon",
   bgcol = "grey90",
   text_size_prop_label = NA,
@@ -20,7 +20,7 @@ sig_visualise_minified(
 
 \item{proportion}{Numeric value between 0 and 1 representing the proportion to display.}
 
-\item{format}{Function to format the proportion label. Defaults to \code{\link[=fmt_percent]{fmt_percent()}}.}
+\item{format}{Function to format the proportion label. Defaults to \code{\link[=fmt_percent]{fmt_percent()}}. Most common alternative is to use \code{\link[=fmt_round]{fmt_round()}}.}
 
 \item{fgcol}{Color for the foreground (proportion) part of the bar. Defaults to \code{"maroon"}.}
 
