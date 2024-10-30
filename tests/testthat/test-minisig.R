@@ -4,5 +4,5 @@ test_that("sig_visualise_minified works", {
   expect_no_error(sm(sig_visualise_minified(signature = sigshared::example_signature(), proportion = 0.4)))
 
   # Similar Sample
-  expect_no_error(sm(sig_visualise_minified(tally_single_sample, 0.5, format = fmt_round(digits=2))))
+  expect_no_error(sm(sig_visualise_minified(sigshared::example_catalogue(), 0.5, format = fmt_round(digits=2))))
 })

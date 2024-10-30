@@ -12,7 +12,9 @@ sig_visualise_minified(
   bgcol = "grey90",
   text_size_prop_label = NA,
   heights = c(0.85, 0.15),
-  ...
+  textcol = "black",
+  textcol_inverted = "white",
+  proportion_inversion_point = 0.5
 )
 }
 \arguments{
@@ -30,7 +32,9 @@ sig_visualise_minified(
 
 \item{heights}{Numeric vector specifying the relative heights of the signature plot and proportion bar.}
 
-\item{...}{Additional arguments passed to underlying functions.}
+\item{textcol}{Colour of proportion label when \code{proportion} is less than \code{proportion_inversion_point}}
+
+\item{textcol_inverted}{Colour of proportion label when \code{proportion} greater than \code{proportion_inversion_point}}
 }
 \value{
 A combined ggplot object of the signature plot and proportion bar.
@@ -42,4 +46,6 @@ Generates a compact visualization of a signature plot with a proportion bar unde
 sig <- sigshared::example_signature()
 sig_visualise_minified(sig, proportion = 0.75)
 
+# Change size ratio between signature plot & bar
+sig_visualise_minified(sig, proportion = 0.75, heights = c(0.6, 0.4))
 }
