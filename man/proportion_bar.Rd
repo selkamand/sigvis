@@ -6,20 +6,29 @@
 \usage{
 proportion_bar(
   proportion,
-  format = fmt_percent,
+  format = fmt_percent(),
   fgcol = "maroon",
   bgcol = "grey90",
+  textcol = "black",
+  textcol_inverted = "white",
+  proportion_inversion_point = 0.5,
   size = NA
 )
 }
 \arguments{
 \item{proportion}{Numeric value between 0 and 1 representing the proportion to be plotted.}
 
-\item{format}{Function to format the proportion label. Defaults to \code{\link[=fmt_percent]{fmt_percent()}}.}
+\item{format}{Function to format the proportion label. Defaults to \code{\link[=fmt_percent]{fmt_percent()}}. Most common alternative is to use \code{\link[=fmt_round]{fmt_round()}}.}
 
 \item{fgcol}{Color for the foreground (proportion) part of the bar. Defaults to \code{"maroon"}.}
 
 \item{bgcol}{Color for the background (remaining) part of the bar. Defaults to \code{"grey90"}.}
+
+\item{textcol}{Colour of proportion label when \code{proportion} is less than \code{proportion_inversion_point}}
+
+\item{textcol_inverted}{Colour of proportion label when \code{proportion} greater than \code{proportion_inversion_point}}
+
+\item{proportion_inversion_point}{The proportion above which the proportion will be rendered on top of progress bar, not}
 
 \item{size}{Numeric value for the text size of the proportion label. Defaults to \code{NA}.}
 }
@@ -29,7 +38,15 @@ A ggplot object representing the proportion bar plot.
 \description{
 Creates a horizontal bar plot representing a single proportion, with optional formatting and colors.
 }
+\details{
+The for proportion values below proportion_inversion_point, the text label
+will be placed on the far right side of the bar and coloured by \code{textcol}.
+Otherwise, will be aligned on the inside of the bar and colour will be set to
+\code{textcol_inverted}
+}
 \examples{
 proportion_bar(0.75)
 proportion_bar(0.5, fgcol = "blue", bgcol = "lightblue")
+
+
 }

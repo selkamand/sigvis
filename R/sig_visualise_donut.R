@@ -39,7 +39,7 @@ sig_visualise_donut <- function(proportions, unexplained_label = "Unexplained", 
 
   # Reorder labels based on proportions for cleaner plotting
   data[["labels"]] <- forcats::fct_reorder(data[["labels"]], data[["proportion"]])
-  data[["tooltip"]] <- paste0(data[["labels"]], " (", fmt_percent(data[["proportion"]], digits = 0, space = FALSE), ")")
+  data[["tooltip"]] <- paste0(data[["labels"]], " (", percent(data[["proportion"]], digits = 0, space = FALSE), ")")
 
   # Create the donut plot
   gg_donut <- ggplot(data, aes(x = .data[["proportion"]], y = "", fill = .data[["labels"]])) +

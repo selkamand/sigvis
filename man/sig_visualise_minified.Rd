@@ -7,12 +7,14 @@
 sig_visualise_minified(
   signature,
   proportion,
-  format = fmt_percent,
+  format = fmt_percent(),
   fgcol = "maroon",
   bgcol = "grey90",
   text_size_prop_label = NA,
-  heights = c(0.9, 0.1),
-  ...
+  heights = c(0.85, 0.15),
+  textcol = "black",
+  textcol_inverted = "white",
+  proportion_inversion_point = 0.5
 )
 }
 \arguments{
@@ -20,7 +22,7 @@ sig_visualise_minified(
 
 \item{proportion}{Numeric value between 0 and 1 representing the proportion to display.}
 
-\item{format}{Function to format the proportion label. Defaults to \code{\link[=fmt_percent]{fmt_percent()}}.}
+\item{format}{Function to format the proportion label. Defaults to \code{\link[=fmt_percent]{fmt_percent()}}. Most common alternative is to use \code{\link[=fmt_round]{fmt_round()}}.}
 
 \item{fgcol}{Color for the foreground (proportion) part of the bar. Defaults to \code{"maroon"}.}
 
@@ -28,9 +30,13 @@ sig_visualise_minified(
 
 \item{text_size_prop_label}{Numeric value for the text size of the proportion label in the bar. Defaults to \code{NA}.}
 
-\item{heights}{Numeric vector specifying the relative heights of the signature plot and proportion bar. Defaults to \code{c(0.9, 0.1)}.}
+\item{heights}{Numeric vector specifying the relative heights of the signature plot and proportion bar.}
 
-\item{...}{Additional arguments passed to underlying functions.}
+\item{textcol}{Colour of proportion label when \code{proportion} is less than \code{proportion_inversion_point}}
+
+\item{textcol_inverted}{Colour of proportion label when \code{proportion} greater than \code{proportion_inversion_point}}
+
+\item{proportion_inversion_point}{The proportion above which the proportion will be rendered on top of progress bar, not}
 }
 \value{
 A combined ggplot object of the signature plot and proportion bar.
@@ -42,4 +48,6 @@ Generates a compact visualization of a signature plot with a proportion bar unde
 sig <- sigshared::example_signature()
 sig_visualise_minified(sig, proportion = 0.75)
 
+# Change size ratio between signature plot & bar
+sig_visualise_minified(sig, proportion = 0.75, heights = c(0.6, 0.4))
 }

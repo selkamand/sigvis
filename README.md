@@ -190,21 +190,45 @@ sig_visualise_dotplot(
 
 <img src="man/figures/README-signature_dotplot-1.png" width="100%" />
 
-### Visualise Signature + Bar
+### Visualise Minimal Signature Plot + Proportion Bar
 
-For explanatory signatures and similar samples. See
-[sigstory](https://github.com/selkamand/sigstory) for examples of why we
-need.
+Rendering a minimal version of a signature or catalogue with an
+accompanying proportion bar can be highly informative. This
+visualization technique allows you to display a signature from your
+model alongside the proportion of all mutations that the signature
+explains. Additionally, if you’ve conducted a similarity analysis on
+mutation catalogues, you can use these plots to visualize both the most
+similar sample’s catalogue and its cosine similarity to your reference
+sample.
+
+For practical examples of how these plots are utilized, see
+[sigstory](https://github.com/selkamand/sigstory)
 
 ``` r
-# Quick reference visualisation of SBS2 that explains 40% of a sample
-sig_visualise_minified(signature = SBS2, proportion = 0.4)
+
+# Visualize Signature SBS2 that explains 60% of a sample
+sig_visualise_minified(signature = SBS2, proportion = 0.6)
 #> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
 #> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
 #> ✔ Types matched perfectly to palette [snv_type]
 ```
 
 <img src="man/figures/README-minified-1.png" width="100%" />
+
+``` r
+
+# Visualize a sample catalogue with a cosine similarity of 0.3 to a sample of interest,
+sig_visualise_minified(
+  tally_single_sample,
+  proportion = 0.3,
+  format = fmt_round(digits = 2)
+)
+#> ✔ All channels matched perfectly to set [sbs_96]. Using this set for sort order
+#> ✔ All types matched perfectly to set [sbs_type]. Using this set for sort order
+#> ✔ Types matched perfectly to palette [snv_type]
+```
+
+<img src="man/figures/README-minified-2.png" width="100%" />
 
 ### Visualise Signature Model as Donut
 
