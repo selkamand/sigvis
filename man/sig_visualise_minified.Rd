@@ -11,7 +11,7 @@ sig_visualise_minified(
   fgcol = "maroon",
   bgcol = "grey90",
   text_size_prop_label = NA,
-  heights = c(0.9, 0.1),
+  heights = c(0.85, 0.15),
   ...
 )
 }
@@ -28,7 +28,7 @@ sig_visualise_minified(
 
 \item{text_size_prop_label}{Numeric value for the text size of the proportion label in the bar. Defaults to \code{NA}.}
 
-\item{heights}{Numeric vector specifying the relative heights of the signature plot and proportion bar. Defaults to \code{c(0.9, 0.1)}.}
+\item{heights}{Numeric vector specifying the relative heights of the signature plot and proportion bar.}
 
 \item{...}{Additional arguments passed to underlying functions.}
 }

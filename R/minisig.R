@@ -52,7 +52,7 @@ proportion_bar <- function(proportion, format = fmt_percent(), fgcol = "maroon",
 #' @param fgcol Color for the foreground (proportion) part of the bar. Defaults to `"maroon"`.
 #' @param bgcol Color for the background (remaining) part of the bar. Defaults to `"grey90"`.
 #' @param text_size_prop_label Numeric value for the text size of the proportion label in the bar. Defaults to `NA`.
-#' @param heights Numeric vector specifying the relative heights of the signature plot and proportion bar. Defaults to `c(0.9, 0.1)`.
+#' @param heights Numeric vector specifying the relative heights of the signature plot and proportion bar.
 #' @param ... Additional arguments passed to underlying functions.
 #'
 #' @return A combined ggplot object of the signature plot and proportion bar.
@@ -62,7 +62,7 @@ proportion_bar <- function(proportion, format = fmt_percent(), fgcol = "maroon",
 #' sig <- sigshared::example_signature()
 #' sig_visualise_minified(sig, proportion = 0.75)
 #'
-sig_visualise_minified <- function(signature, proportion, format = fmt_percent(), fgcol = "maroon", bgcol = "grey90", text_size_prop_label = NA, heights = c(0.9, 0.1), ...) {
+sig_visualise_minified <- function(signature, proportion, format = fmt_percent(), fgcol = "maroon", bgcol = "grey90", text_size_prop_label = NA, heights = c(0.85, 0.15), ...) {
 
   # Create Signature
   gg_sig <- sig_visualise(signature = signature)
