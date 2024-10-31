@@ -153,7 +153,6 @@ pal_set2 <- function(){
 #' @param verbose verbose (flag)
 #' @return A color palette (named vector where names are types and values are colours).
 #'
-#' @importFrom stats na.omit
 #'
 #' @examples
 #' \dontrun{# Example usage:

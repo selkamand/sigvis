@@ -40,11 +40,10 @@ proportion_bar <- function(proportion, format = fmt_percent(), fgcol = "maroon",
     measure = c("contribution", "all")
   )
 
-  # Decide whether text annotation is on right or left
-  # hjust <- if(proportion < 0.5)  1.2 else 1.2
+  # Adjust label settings based on proportion_inversion_point
   hjust <- 1.2
-  text_colour <- if(proportion < 0.5) textcol else textcol_inverted
-  x <- if(proportion < 0.5) 1 else proportion
+  text_colour <- if(proportion < proportion_inversion_point) textcol else textcol_inverted
+  x <- if(proportion < proportion_inversion_point) 1 else proportion
 
   # Create Plot
   ggplot2::ggplot(dd, ggplot2::aes(x = .data[["contribution"]], y = "")) +
