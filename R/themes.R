@@ -30,7 +30,6 @@ theme_sigverse <- function(fontsize_x = NULL, fontsize_y = NULL, fontsize_title 
 #' A minimal theme with no axis text or ticks.
 #' Commonly used for smaller signature/catalogue plots
 #'
-#' @importFrom ggplot2 %+replace%
 #' @inheritDotParams ggplot2::theme_bw
 #' @inheritParams vis_options
 #' @return ggplot2 theme
