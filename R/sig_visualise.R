@@ -18,7 +18,6 @@
 #' @return ggplot object
 #' @export
 #'
-#' @importFrom ggplot2 ggplot aes geom_col theme scale_y_continuous scale_x_continuous ylab xlab expansion element_text element_blank
 #'
 #' @examples
 #' library(sigstash)

@@ -2,7 +2,6 @@
 #' Sigverse Theme for Signature Plots
 #'
 #'
-#' @importFrom ggplot2 %+replace%
 #' @inheritDotParams ggplot2::theme_bw
 #' @inheritParams vis_options
 #' @return ggplot2 theme
